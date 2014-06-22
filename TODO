@@ -3,22 +3,30 @@ TODO List for Syntax:
 	- Refactor Shader system to be more flexible and easier to understand.
 		SharedUniforms are great, but I need to simplify it a little more if I can.
 		I also need to set up shaders to support Compute shaders.
-		I need to allow shaders to be built from strings, not just files, and allow reloading of string-based shaders.
-		Perhaps try and come up with a system that "builds" shaders from strings depending on material features.
+		I need to allow shaders to be built from strings, not just files, 
+		and allow reloading of string-based shaders.
+		Perhaps try and come up with a system that "builds" shaders from 
+		strings depending on material features.
 		
 	- Add in a plugin-based system for mesh loading to allow different formats.
 		Desired formats include FBX, OBJ and DAE (Collada).
 		This needs to be handled "under the hood" so that the ResourceLibrary doesn't care.
 		
 	- Fix FBX transform error.
-		If an artist uses FreezeTransforms then the vertices when loaded contain the transform offsets and the mesh's transform is identity, which is horrible for a parented hierarchy.
+		If an artist uses FreezeTransforms then the vertices when loaded 
+		contain the transform offsets and the mesh's transform is identity, 
+		which is horrible for a parented hierarchy.
 		
 	- Textures need to change to allow HDR and sRGB, and keep track of pixel data.
-		Currently using SOIL for image loading which doesn't have great HDR support. I need a lightweight and flexible image loading system that supports HDR and sRGB.
-		Also need to allow texture pixel data to be loaded rather than just a GL texture handle.
+		Currently using SOIL for image loading which doesn't have great 
+		HDR support. I need a lightweight and flexible image loading system 
+		that supports HDR and sRGB.
+		Also need to allow texture pixel data to be loaded rather than 
+		just a GL texture handle.
 		
 	- Flexible Post-Effects pipeline.
-		Need to ressurrect my Deferred, HDR, DoF, SSAO and SMAA wrappers and refactor them to get rid of as much pointless overhead as possible.
+		Need to ressurrect my Deferred, HDR, DoF, SSAO and SMAA wrappers 
+		and refactor them to get rid of as much pointless overhead as possible.
 		Need to incorporate SSS and Motion Blur.
 	
 	- HDR and Tonemapping seemed broken last time round, so fix it!

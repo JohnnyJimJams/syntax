@@ -2,14 +2,35 @@
 20140622 - 4:35PM:
 
 So I restarted my old renderer. This code goes back a few years.
-Syntax was the name I was calling my DirectX9 renderer back in 2008-9 days. Basic engine coding had always been a side hobby of mine ever since I was a student learning game coding, and I kept it going while working at THQ, occasionally losing interest only to return again.
+Syntax was the name I was calling my DirectX9 renderer back in 2008-9 days. 
+Basic engine coding had always been a side hobby of mine ever since I 
+was a student learning game coding, and I kept it going while working 
+at THQ, occasionally losing interest only to return again.
 
-Originally my first engine was called "Eg" as in an example engine. Heavily influenced by the Auran Jet engine, and by books I was reading at the time (3D Game Engine Design by David Eberly). It worked, had its own 3D Studio MAX exporter, and had a large robust structure. But "robust" ended up meaning "bloated". After Eg it became "Nemesis" because it always seemed to have some sort of issue I had to return to, and I kept trying to take away the bloat but after a month or so I'd always realise I've just made it worse. A few versions later it became "Reverie", but that iteration of the engine was dropped early as it just wasn't working the way I wanted. I started a full redesign, keeping certain parts, and ended up calling the new version "Syntax".
+Originally my first engine was called "Eg" as in an example engine. 
+Heavily influenced by the Auran Jet engine, and by books I was reading 
+at the time (3D Game Engine Design by David Eberly). It worked, had its 
+own 3D Studio MAX exporter, and had a large robust structure. But "robust" 
+ended up meaning "bloated". After Eg it became "Nemesis" because it 
+always seemed to have some sort of issue I had to return to, and I kept 
+trying to take away the bloat but after a month or so I'd always realise 
+I've just made it worse. A few versions later it became "Reverie", but 
+that iteration of the engine was dropped early as it just wasn't working 
+the way I wanted. I started a full redesign, keeping certain parts, and 
+ended up calling the new version "Syntax".
 
-Syntax was originally a forward renderer in DX9, but eventually I changed it to a deferred engine using DX11 and called it Syntax2.
+Syntax was originally a forward renderer in DX9, but eventually I changed 
+it to a deferred engine using DX11 and called it Syntax2.
 
-And now this new incarnation of Syntax returns it back to version 1, switching it to OpenGL and never looking back. The engine is miniscule compared to what it was, and its aim is to give me a small code-base to work from when testing out little shader ideas.
+And now this new incarnation of Syntax returns it back to version 1, 
+switching it to OpenGL and never looking back. The engine is miniscule 
+compared to what it was, and its aim is to give me a small code-base to 
+work from when testing out little shader ideas.
 
-It may take a little to get it back to its glory days, but it'll get there. I have been inspired to get back in to it after a student posted some links to a few interesting tutorials I'd like to try out (one was very similar to my SSAO technique but seemed simpler) and after a friend showed me some videos of his current shader shenanigans that also put me to shame.
+It may take a little to get it back to its glory days, but it'll get there. 
+I have been inspired to get back in to it after a student posted some links 
+to a few interesting tutorials I'd like to try out (one was very similar to 
+my SSAO technique but seemed simpler) and after a friend showed me some 
+videos of his current shader shenanigans that also put me to shame.
 
 So let's see how far I get with it this time!
