@@ -8,7 +8,7 @@ SynRTTIDerived(Mesh,SceneObject);
 
 void Mesh::build()
 {
-	for (auto geometry : m_geometry)
+	for (auto& geometry : m_geometry)
 	{
 		geometry->build();
 	}
@@ -26,7 +26,7 @@ void Mesh::render()
 	m_material->bind();
 
 	// draw each chunk
-	for (auto geometry : m_geometry)
+	for (auto& geometry : m_geometry)
 	{
 		geometry->bind();
 		geometry->render();

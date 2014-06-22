@@ -6,6 +6,7 @@
 #include <utilities/Gizmos.h>
 #include <scene/FlyCamera.h>
 #include <render/ResourceLibrary.h>
+#include <render/Mesh.h>
 
 class TestApp : public syn::Application
 {
@@ -28,7 +29,7 @@ public:
 		glfwDefaultWindowHints();
 
 		// turn on 8x AA
-	//	glfwWindowHint(GLFW_SAMPLES, 8);
+		glfwWindowHint(GLFW_SAMPLES, 8);
 
 		// create a windowed mode window and its OpenGL context
 		m_window = glfwCreateWindow(1280, 720, "Syntax Unit Test", nullptr, nullptr);
@@ -54,6 +55,9 @@ public:
 			return false;
 		}
 
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(syn::logGLDebugCallback, nullptr);
+
 		// simply resize the GL viewport when the window size changes
 		glfwSetWindowSizeCallback(m_window, [](GLFWwindow*, int w, int h)
 		{ 
@@ -65,27 +69,27 @@ public:
 		// start systems
 		syn::Gizmos::create();
 		syn::ResourceLibrary* resourceLibrary = syn::ResourceLibrary::create();
-/*
+
 		// create skybox
 		const char* skyboxShaderFiles[] = {
-			"shaders/skybox.vert",
+			"../../bin/shaders/skybox.vert",
 			nullptr,nullptr,nullptr,
-			"shaders/skybox.frag"
+			"../../bin/shaders/skybox.frag"
 		};
 		syn::Shader* skyboxShader = resourceLibrary->createShader("skybox", skyboxShaderFiles);
 		const char* skyboxTextures[] = {
-			"images/skybox/skyrender_posx.bmp",
-			"images/skybox/skyrender_negx.bmp",
-			"images/skybox/skyrender_posy.bmp",
-			"images/skybox/skyrender_negy.bmp",
-			"images/skybox/skyrender_posz.bmp",
-			"images/skybox/skyrender_negz.bmp",
+			"../../bin/textures/skybox/skyrender_posx.bmp",
+			"../../bin/textures/skybox/skyrender_negx.bmp",
+			"../../bin/textures/skybox/skyrender_posy.bmp",
+			"../../bin/textures/skybox/skyrender_negy.bmp",
+			"../../bin/textures/skybox/skyrender_posz.bmp",
+			"../../bin/textures/skybox/skyrender_negz.bmp",
 		};
 		syn::Texture* skyboxTexture = resourceLibrary->loadTextureCube(skyboxTextures);
 		syn::Material* skyboxMaterial = resourceLibrary->createMaterial("skybox");
 		skyboxMaterial->setShader( skyboxShader );
 		skyboxMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
-*/
+
 		// create a camera
 		m_camera = new syn::FlyCamera(10);
 		m_camera->setLocalTranslation(0,2,10);
@@ -95,14 +99,14 @@ public:
 		m_scene = new syn::Node();
 		m_scene->setName("root");
 		m_scene->attachChild(m_camera);
-/*		
+
 		syn::Mesh* skybox = new syn::Mesh();
 		skybox->setName("skybox");
 		skybox->setMaterial(skyboxMaterial);
 		skybox->attachGeometry(syn::Geometry::createBoxSimpleInverted());
 		skybox->setLocalScale(256);
 		m_scene->attachChild(skybox);
-*/		
+
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);

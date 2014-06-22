@@ -28,4 +28,12 @@ namespace syn
 
 #endif // _DEBUG
 
+	void SYNTAX_API __stdcall logGLDebugCallback(unsigned int a_source,
+		unsigned int a_type,
+		unsigned int a_id,
+		unsigned int a_severity,
+		int a_length,
+		const char* a_message,
+		void* a_userParam);
+
 } // namespace syn

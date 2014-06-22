@@ -123,11 +123,16 @@ bool Shader::linkProgram()
 	glDeleteProgram(m_program);
 
 	m_program = glCreateProgram();
-	glAttachShader(m_program, m_shaders[Vertex]);
-	glAttachShader(m_program, m_shaders[Control]);
-	glAttachShader(m_program, m_shaders[Evaluation]);
-	glAttachShader(m_program, m_shaders[Geometry]);
-	glAttachShader(m_program, m_shaders[Fragment]);
+	if (m_shaders[Vertex] != 0)
+		glAttachShader(m_program, m_shaders[Vertex]);
+	if (m_shaders[Control] != 0)
+		glAttachShader(m_program, m_shaders[Control]);
+	if (m_shaders[Evaluation] != 0)
+		glAttachShader(m_program, m_shaders[Evaluation]);
+	if (m_shaders[Geometry] != 0)
+		glAttachShader(m_program, m_shaders[Geometry]);
+	if (m_shaders[Fragment] != 0)
+		glAttachShader(m_program, m_shaders[Fragment]);
 	glLinkProgram(m_program);
 
 	int success = GL_FALSE;

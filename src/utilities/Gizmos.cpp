@@ -1,6 +1,7 @@
 #include <utilities/Gizmos.h>
 #include <GL/glew.h>
 #include <glm/ext.hpp>
+#include <utilities/Log.h>
 
 namespace syn
 {
@@ -63,9 +64,7 @@ Gizmos::Gizmos(unsigned int a_maxLines, unsigned int a_maxTris,
 		char* infoLog = new char[infoLogLength];
         
 		glGetShaderInfoLog(m_shader, infoLogLength, 0, infoLog);
-		printf("Error: Failed to link Gizmo shader program!\n");
-		printf("%s",infoLog);
-		printf("\n");
+		logError("Error: Failed to link Gizmo shader program!\n%s\n", infoLog);
 		delete[] infoLog;
 	}
 
@@ -794,6 +793,9 @@ void Gizmos::draw(const glm::mat4& a_projectionView)
 {
 	if ( sm_singleton != nullptr && (sm_singleton->m_lineCount > 0 || sm_singleton->m_triCount > 0 || sm_singleton->m_transparentTriCount > 0))
 	{
+		int shader = 0;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &shader);
+
 		glUseProgram(sm_singleton->m_shader);
 		
 		unsigned int projectionViewUniform = glGetUniformLocation(sm_singleton->m_shader,"ProjectionView");
@@ -846,7 +848,7 @@ void Gizmos::draw(const glm::mat4& a_projectionView)
 				glDisable(GL_BLEND);
 		}
 
-		glUseProgram(0);
+		glUseProgram(shader);
 	}
 }
 
@@ -854,6 +856,9 @@ void Gizmos::draw2D(const glm::mat4& a_projection)
 {
 	if ( sm_singleton != nullptr && (sm_singleton->m_2DlineCount > 0 || sm_singleton->m_2DtriCount > 0))
 	{
+		int shader = 0;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &shader);
+
 		glUseProgram(sm_singleton->m_shader);
 		
 		unsigned int projectionViewUniform = glGetUniformLocation(sm_singleton->m_shader,"ProjectionView");
@@ -900,7 +905,7 @@ void Gizmos::draw2D(const glm::mat4& a_projection)
 				glDisable(GL_BLEND);
 		}
 
-		glUseProgram(0);
+		glUseProgram(shader);
 	}
 }
 

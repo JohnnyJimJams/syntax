@@ -30,12 +30,12 @@ const char* Material::getTextureChannelName(TextureChannel a_channel)
 
 void Material::bind()
 {
-	Shader* shader = m_shader != nullptr ? m_shader : Shader::getBoundShader();
+	Shader* shader = m_shader;
 
-	// bind camera data?
-//	Camera::getActiveCamera()->bind(shader);
+	if (shader == nullptr)
+		shader = Shader::getBoundShader();
 
-//	if (sm_boundMaterial != this)
+	if (sm_boundMaterial != this)
 	{
 		// bind material data
 		shader->setUniform("material.ambient", m_ambient);
@@ -45,7 +45,7 @@ void Material::bind()
 
 		// bind textures
 		int channel = 0;
-		for (auto texture : m_textures)
+		for (auto& texture : m_textures)
 		{
 			if (texture != nullptr)
 				texture->bind(channel);
