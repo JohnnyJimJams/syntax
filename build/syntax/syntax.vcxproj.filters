@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="io">
+      <UniqueIdentifier>{f7f60232-151c-4627-a340-6f7b6a3570c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{6c42e9d6-cbe2-4922-9b8d-1becc78af3d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{77283255-84a3-4b57-aadc-752c49985ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utilities">
+      <UniqueIdentifier>{ca4fa989-5ccc-4ba4-961c-cac01f85dd2f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\Object.h" />
+    <ClInclude Include="..\..\inc\RTTI.h" />
+    <ClInclude Include="..\..\inc\Syntax.h" />
+    <ClInclude Include="..\..\inc\utilities\BitField.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities\Property.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities\Assert.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities\Gizmos.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities\HashFunctions.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities\Log.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\Camera.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\Node.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\SceneController.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\scene\SceneObject.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Geometry.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Light.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Material.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Mesh.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\ResourceLibrary.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Shader.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\SharedShaderUniforms.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\Texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\Application.h" />
+    <ClInclude Include="..\..\inc\scene\FlyCamera.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\render\FrameBuffer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\RefObject.h" />
+    <ClInclude Include="..\..\inc\SmartPointer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Object.cpp" />
+    <ClCompile Include="..\..\src\RTTI.cpp" />
+    <ClCompile Include="..\..\src\utilities\Assert.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\BitField.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\Gizmos.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\HashFunctions.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\utilities\Log.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application.cpp" />
+    <ClCompile Include="..\..\src\render\FrameBuffer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Geometry.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Light.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Material.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Mesh.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\ResourceLibrary.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Shader.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\render\Texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Camera.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\Node.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\SceneController.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\SceneObject.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scene\FlyCamera.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\RefObject.cpp" />
+  </ItemGroup>
+</Project>
