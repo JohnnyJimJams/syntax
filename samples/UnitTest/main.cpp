@@ -170,7 +170,7 @@ public:
 
 		m_scene->render();
 
-	//	debugRender();
+		debugRender();
 		
 		glfwSwapBuffers(m_window);
 	}

@@ -624,12 +624,12 @@ void Shader::registerSharedUniform( const char* a_name, SharedUniformFactoryBase
 void Shader::initialiseSharedUniforms()
 {
 	// initialise common shared uniforms
-	Shader::registerSharedUniform("aoBuffer", new SharedIntUniformFactory(Material::AOBuffer));
-	Shader::registerSharedUniform("lightBuffer", new SharedIntUniformFactory(Material::LightBuffer));
+//	Shader::registerSharedUniform("aoBuffer", new SharedIntUniformFactory(Material::AOBuffer));
+//	Shader::registerSharedUniform("lightBuffer", new SharedIntUniformFactory(Material::LightBuffer));
 	Shader::registerSharedUniform("diffuseMap", new SharedIntUniformFactory(Material::Diffuse));
 	Shader::registerSharedUniform("normalMap", new SharedIntUniformFactory(Material::Normal));
 	Shader::registerSharedUniform("specularMap", new SharedIntUniformFactory(Material::Specular));
-	Shader::registerSharedUniform("albedoMap", new SharedIntUniformFactory(0));
+//	Shader::registerSharedUniform("albedoMap", new SharedIntUniformFactory(0));
 	Shader::registerSharedUniform("nearFar", new Shader::SharedUniformFactory<SharedNearFarUniform>());
 	Shader::registerSharedUniform("camera.position", new Shader::SharedUniformFactory<SharedCameraPositionUniform>());
 	Shader::registerSharedUniform("camera.view", new Shader::SharedUniformFactory<SharedCameraViewUniform>());
