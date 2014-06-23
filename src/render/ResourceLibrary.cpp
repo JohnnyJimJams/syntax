@@ -5,6 +5,7 @@
 #include <glm/ext.hpp>
 //#include <fbxsdk.h>
 #include <utilities/Log.h>
+#include <utilities/Assert.h>
 #include <algorithm>
 #include <set>
 
@@ -77,6 +78,7 @@ Texture* ResourceLibrary::createTexture(const char* a_name, unsigned int a_width
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		texture->m_format = a_format;
@@ -116,7 +118,8 @@ Texture* ResourceLibrary::loadTexture(const char* a_filename, unsigned int a_typ
 		glTexImage2D(GL_TEXTURE_2D, 0, texture->m_format, texture->m_width, texture->m_height, 0, texture->m_format, GL_UNSIGNED_BYTE, texture->m_data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		m_textures[id] = texture;
 	}
@@ -139,20 +142,11 @@ Texture* ResourceLibrary::reloadTexture(const char* a_filename)
 	{
 		texture = iter->second;
 
-		/*if (texture->getType() == Texture::TextureCube)
+		if (texture->getType() == Texture::TextureCube)
 		{
-			texture->m_handle = SOIL_load_OGL_single_cubemap(a_filename, "EWUDNS", SOIL_LOAD_AUTO, texture->getHandle(), SOIL_FLAG_MIPMAPS);
-
-			if (texture->m_handle != 0)
-			{
-				glBindTexture(GL_TEXTURE_CUBE_MAP, texture->m_handle);
-				glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-				glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-				glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE );
-				glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-			}
+			assertMessage(false, "Can not reload a TextureCube this way!");
 		}
-		else*/
+		else
 		{
 			delete[] texture->m_data;
 			texture->m_data = stbi_load(a_filename, &texture->m_width, &texture->m_height, &texture->m_format, STBI_default);
@@ -167,6 +161,7 @@ Texture* ResourceLibrary::reloadTexture(const char* a_filename)
 
 			glBindTexture(GL_TEXTURE_2D, texture->m_handle);
 			glTexImage2D(GL_TEXTURE_2D, 0, texture->m_format, texture->m_width, texture->m_height, 0, texture->m_format, GL_UNSIGNED_BYTE, texture->m_data);
+			glGenerateMipmap(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		}
 	}
@@ -176,20 +171,11 @@ Texture* ResourceLibrary::reloadTexture(const char* a_filename)
 
 Texture* ResourceLibrary::reloadTexture(Texture* a_texture)
 {
-	/*if (a_texture->getType() == Texture::TextureCube)
+	if (a_texture->getType() == Texture::TextureCube)
 	{
-		a_texture->m_handle = SOIL_load_OGL_single_cubemap(a_texture->getName(), "EWUDNS", SOIL_LOAD_AUTO, a_texture->getHandle(), SOIL_FLAG_MIPMAPS);  
-
-		if (a_texture->m_handle != 0)
-		{
-			glBindTexture(GL_TEXTURE_CUBE_MAP, a_texture->m_handle);
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE );
-			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-		}
+		assertMessage(false, "Can not reload a TextureCube this way!");
 	}
-	else*/
+	else
 	{
 		delete[] a_texture->m_data;
 		a_texture->m_data = stbi_load(a_texture->getName(), &a_texture->m_width, &a_texture->m_height, &a_texture->m_format, STBI_default);
@@ -204,6 +190,7 @@ Texture* ResourceLibrary::reloadTexture(Texture* a_texture)
 
 		glBindTexture(GL_TEXTURE_2D, a_texture->m_handle);
 		glTexImage2D(GL_TEXTURE_2D, 0, a_texture->m_format, a_texture->m_width, a_texture->m_height, 0, a_texture->m_format, GL_UNSIGNED_BYTE, a_texture->m_data);
+		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	}
 
@@ -262,6 +249,17 @@ Texture* ResourceLibrary::loadTextureCube(const char** a_filenames)
 
 		texture = new Texture(id, a_filenames[0], handle, Texture::TextureCube);
 		m_textures[id] = texture;
+
+		texture->m_width = x[0];
+		texture->m_height = y[0];
+		texture->m_format = format;
+
+		delete[] data[0];
+		delete[] data[1];
+		delete[] data[2];
+		delete[] data[3];
+		delete[] data[4];
+		delete[] data[5];
 	}
 	else
 	{
@@ -275,24 +273,62 @@ Texture* ResourceLibrary::reloadTextureCube(const char** a_filenames)
 {
 	Texture* texture = nullptr;
 
-	unsigned int id = HashFunctions::hash(a_filenames[0], strlen(a_filenames[0]));
+	unsigned int id = SynStringHash(a_filenames[0]);
 
 	auto iter = m_textures.find( id );
 	if (iter != m_textures.end())
 	{
 		texture = iter->second;
-		/*
-		texture->m_handle = SOIL_load_OGL_cubemap(a_filenames[0], a_filenames[1], a_filenames[2], a_filenames[3], a_filenames[4], a_filenames[5], 
-			SOIL_LOAD_AUTO, texture->getHandle(),	SOIL_FLAG_MIPMAPS);
 
-		if (texture->m_handle != 0)
+		int x[6], y[6], comp[6];
+		unsigned char* data[6];
+
+		// thread loading the pixel data
+		std::vector<std::thread> threads;
+		for (int i = 0; i < 6; ++i)
 		{
-			glBindTexture(GL_TEXTURE_CUBE_MAP, texture->m_handle);
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE );
-			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-		}*/
+			threads.push_back(std::thread([&x, &y, &comp, &data](int i, const char* filename)
+			{
+				data[i] = stbi_load(filename, &x[i], &y[i], &comp[i], STBI_default);
+			}, i, a_filenames[i]));
+		}
+
+		for (auto& t : threads)
+			t.join();
+
+		int format = 0;
+		switch (comp[0])
+		{
+		case STBI_grey: format = GL_LUMINANCE; break;
+		case STBI_grey_alpha: format = GL_LUMINANCE_ALPHA; break;
+		case STBI_rgb: format = GL_RGB; break;
+		case STBI_rgb_alpha: format = GL_RGBA; break;
+		};
+
+		texture->m_width = x[0];
+		texture->m_height = y[0];
+		texture->m_format = format;
+
+		glBindTexture(GL_TEXTURE_CUBE_MAP, texture->m_handle);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, x[0], y[0], 0, format, GL_UNSIGNED_BYTE, data[0]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, x[1], y[1], 0, format, GL_UNSIGNED_BYTE, data[1]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, format, x[2], y[2], 0, format, GL_UNSIGNED_BYTE, data[2]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, format, x[3], y[3], 0, format, GL_UNSIGNED_BYTE, data[3]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, format, x[4], y[4], 0, format, GL_UNSIGNED_BYTE, data[4]);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, format, x[5], y[5], 0, format, GL_UNSIGNED_BYTE, data[5]);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+		delete[] data[0];
+		delete[] data[1];
+		delete[] data[2];
+		delete[] data[3];
+		delete[] data[4];
+		delete[] data[5];
 	}
 
 	return texture;
@@ -300,7 +336,7 @@ Texture* ResourceLibrary::reloadTextureCube(const char** a_filenames)
 
 Texture* ResourceLibrary::getTexture(const char* a_filename)
 {
-	unsigned int id = HashFunctions::hash(a_filename, strlen(a_filename));
+	unsigned int id = SynStringHash(a_filename);
 	auto iter = m_textures.find( id );
 	if (iter != m_textures.end())
 		return iter->second;

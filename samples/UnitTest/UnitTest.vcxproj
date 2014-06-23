@@ -43,11 +43,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)../lib/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <OutDir>$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)../lib/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <OutDir>$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -85,6 +87,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\bin\shaders\diffuse.frag" />
+    <None Include="..\..\bin\shaders\diffuse.vert" />
     <None Include="..\..\bin\shaders\skybox.frag" />
     <None Include="..\..\bin\shaders\skybox.vert" />
   </ItemGroup>

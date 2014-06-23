@@ -104,7 +104,7 @@ public:
 
 	// create basic primitives
 	static Geometry*	createBox(unsigned int a_vertexAttributes);
-	static Geometry*	createBoxInverted(unsigned int a_vertexAttributes);
+//	static Geometry*	createBoxInverted(unsigned int a_vertexAttributes);
 	static Geometry*	createBoxSimple();
 	static Geometry*	createBoxSimpleInverted();
 	static Geometry*	createSphere(unsigned int a_vertexAttributes, unsigned int a_segments, unsigned int a_rings);

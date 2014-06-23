@@ -26,5 +26,11 @@
     <None Include="..\..\bin\shaders\skybox.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\..\bin\shaders\diffuse.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\bin\shaders\diffuse.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

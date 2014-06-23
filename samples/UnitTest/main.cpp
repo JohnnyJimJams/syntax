@@ -18,7 +18,6 @@ public:
 	float			m_fps;
 	GLFWwindow*		m_window;
 	syn::NodePtr	m_scene;
-	syn::CameraPtr	m_camera;
 
 	virtual bool onCreate(int a_argc, char* a_argv[])
 	{
@@ -62,8 +61,7 @@ public:
 		glfwSetWindowSizeCallback(m_window, [](GLFWwindow*, int w, int h)
 		{ 
 			glViewport(0, 0, w, h); 
-			TestApp* app = (TestApp*)Application::getApp();
-			app->m_camera->setPerspectiveProjection(glm::quarter_pi<float>(), w / (float)h, 0.1f, 1000);
+			syn::Camera::getActiveCamera()->setPerspectiveProjection(glm::quarter_pi<float>(), w / (float)h, 0.1f, 1000);
 		});
 
 		// start systems
@@ -84,28 +82,31 @@ public:
 			"../../bin/textures/skybox/ennis_cube_negy.tga",
 			"../../bin/textures/skybox/ennis_cube_posz.tga",
 			"../../bin/textures/skybox/ennis_cube_negz.tga",
-
-			/*"../../bin/textures/skybox/skyrender_posx.bmp",
-			"../../bin/textures/skybox/skyrender_negx.bmp",
-			"../../bin/textures/skybox/skyrender_posy.bmp",
-			"../../bin/textures/skybox/skyrender_negy.bmp",
-			"../../bin/textures/skybox/skyrender_posz.bmp",
-			"../../bin/textures/skybox/skyrender_negz.bmp",*/
 		};
 		syn::Texture* skyboxTexture = resourceLibrary->loadTextureCube(skyboxTextures);
 		syn::Material* skyboxMaterial = resourceLibrary->createMaterial("skybox");
 		skyboxMaterial->setShader( skyboxShader );
 		skyboxMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
 
-		// create a camera
-		m_camera = new syn::FlyCamera(10);
-		m_camera->lookAtFrom(glm::vec3(10), glm::vec3(0), glm::vec3(0, 1, 0));
-		m_camera->setActive();
+		const char* diffuseShaderFiles[] = {
+			"../../bin/shaders/diffuse.vert",
+			nullptr, nullptr, nullptr,
+			"../../bin/shaders/diffuse.frag"
+		};
+		syn::Shader* diffuseShader = resourceLibrary->createShader("diffuse", diffuseShaderFiles);
+		syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
+		syn::Material* diffuseMaterial = resourceLibrary->createMaterial("diffuse");
+		diffuseMaterial->setShader(diffuseShader);
+		diffuseMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
 
 		// create scene
 		m_scene = new syn::Node();
 		m_scene->setName("root");
-		m_scene->attachChild(m_camera);
+
+		syn::Camera* camera = new syn::FlyCamera(10);
+		camera->lookAtFrom(glm::vec3(10), glm::vec3(0), glm::vec3(0, 1, 0));
+		camera->setActive();
+		m_scene->attachChild(camera);
 
 		syn::Mesh* skybox = new syn::Mesh();
 		skybox->setName("skybox");
@@ -113,6 +114,13 @@ public:
 		skybox->attachGeometry(syn::Geometry::createBoxSimpleInverted());
 		skybox->setLocalScale(256);
 		m_scene->attachChild(skybox);
+
+		syn::Mesh* box = new syn::Mesh();
+		box->setName("box");
+		box->setMaterial(diffuseMaterial);
+		box->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0, 16, 16));
+		box->setLocalScale(5);
+		m_scene->attachChild(box);
 
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
@@ -124,7 +132,6 @@ public:
 	virtual void onDestroy()
 	{
 		m_scene = nullptr;
-		m_camera = nullptr;
 
 		syn::Gizmos::destroy();
 		syn::ResourceLibrary::destroy();
@@ -163,7 +170,7 @@ public:
 
 		m_scene->render();
 
-		debugRender();
+	//	debugRender();
 		
 		glfwSwapBuffers(m_window);
 	}
@@ -183,7 +190,7 @@ public:
 				i == 10 ? glm::vec4(1, 1, 1, 1) : glm::vec4(0, 0, 0, 1));
 		}
 
-		syn::Gizmos::draw(m_camera->getProjectionView());
+		syn::Gizmos::draw(syn::Camera::getActiveCamera()->getProjectionView());
 	}
 };
 
