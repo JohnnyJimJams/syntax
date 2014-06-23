@@ -7,6 +7,7 @@ namespace syn
 
 Texture::~Texture()
 {
+	delete[] m_data;
 	glDeleteTextures(1, &m_handle);
 }
 
@@ -30,41 +31,28 @@ void Texture::bind(int a_slot /* = -1 */)
 	}
 }
 
-void Texture::setFilter(int a_filter)
+void Texture::setParameter(unsigned int a_param, int a_value)
 {
 	bind();
 	switch (m_type)
 	{
-	case Texture1D:		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, a_filter);	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, a_filter);		break;
-	case Texture2D:		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, a_filter);	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, a_filter);			break;
-	case Texture3D:		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, a_filter);	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, a_filter);			break;
-	case TextureCube:	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, a_filter);	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, a_filter);	break;
+	case Texture1D:		glTexParameteri(GL_TEXTURE_1D, a_param, a_value);		break;
+	case Texture2D:		glTexParameteri(GL_TEXTURE_2D, a_param, a_value);		break;
+	case Texture3D:		glTexParameteri(GL_TEXTURE_3D, a_param, a_value);		break;
+	case TextureCube:	glTexParameteri(GL_TEXTURE_CUBE_MAP, a_param, a_value);	break;
 	default:	break;
 	}
 }
 
-void Texture::setAddressing(int a_addressMode)
+void Texture::setParameter(unsigned int a_param, float a_value)
 {
 	bind();
 	switch (m_type)
 	{
-	case Texture1D:		
-		glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, a_addressMode);	
-		break;
-	case Texture2D:		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, a_addressMode);	
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, a_addressMode);			
-		break;
-	case Texture3D:		
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, a_addressMode);	
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, a_addressMode);	
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, a_addressMode);		
-		break;
-	case TextureCube:	
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, a_addressMode);	
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, a_addressMode);	
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, a_addressMode);
-		break;
+	case Texture1D:		glTexParameterf(GL_TEXTURE_1D, a_param, a_value);		break;
+	case Texture2D:		glTexParameterf(GL_TEXTURE_2D, a_param, a_value);		break;
+	case Texture3D:		glTexParameterf(GL_TEXTURE_3D, a_param, a_value);		break;
+	case TextureCube:	glTexParameterf(GL_TEXTURE_CUBE_MAP, a_param, a_value);	break;
 	default:	break;
 	}
 }

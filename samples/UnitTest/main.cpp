@@ -42,7 +42,7 @@ public:
 		auto major = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MAJOR);
 		auto minor = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MINOR);
 		auto revision = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_REVISION);
-		printf("GL %i.%i.%i\n", major, minor, revision);
+		syn::log("GL %i.%i.%i\n", major, minor, revision);
 
 		// make the window's context current
 		glfwMakeContextCurrent(m_window);
@@ -78,12 +78,19 @@ public:
 		};
 		syn::Shader* skyboxShader = resourceLibrary->createShader("skybox", skyboxShaderFiles);
 		const char* skyboxTextures[] = {
-			"../../bin/textures/skybox/skyrender_posx.bmp",
+			"../../bin/textures/skybox/ennis_cube_posx.tga",
+			"../../bin/textures/skybox/ennis_cube_negx.tga",
+			"../../bin/textures/skybox/ennis_cube_posy.tga",
+			"../../bin/textures/skybox/ennis_cube_negy.tga",
+			"../../bin/textures/skybox/ennis_cube_posz.tga",
+			"../../bin/textures/skybox/ennis_cube_negz.tga",
+
+			/*"../../bin/textures/skybox/skyrender_posx.bmp",
 			"../../bin/textures/skybox/skyrender_negx.bmp",
 			"../../bin/textures/skybox/skyrender_posy.bmp",
 			"../../bin/textures/skybox/skyrender_negy.bmp",
 			"../../bin/textures/skybox/skyrender_posz.bmp",
-			"../../bin/textures/skybox/skyrender_negz.bmp",
+			"../../bin/textures/skybox/skyrender_negz.bmp",*/
 		};
 		syn::Texture* skyboxTexture = resourceLibrary->loadTextureCube(skyboxTextures);
 		syn::Material* skyboxMaterial = resourceLibrary->createMaterial("skybox");
@@ -92,7 +99,7 @@ public:
 
 		// create a camera
 		m_camera = new syn::FlyCamera(10);
-		m_camera->setLocalTranslation(0,2,10);
+		m_camera->lookAtFrom(glm::vec3(10), glm::vec3(0), glm::vec3(0, 1, 0));
 		m_camera->setActive();
 
 		// create scene

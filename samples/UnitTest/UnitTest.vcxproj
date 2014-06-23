@@ -41,12 +41,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/soil/src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)../lib/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/soil/src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)../lib/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

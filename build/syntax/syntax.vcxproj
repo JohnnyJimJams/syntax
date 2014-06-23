@@ -92,14 +92,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/soil/src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\lib\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)../dep/soil/lib/vs2013;$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/soil/src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)..\lib\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)../dep/soil/lib/vs2013;$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,7 +114,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;soil_d.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -134,7 +134,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;soil.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
