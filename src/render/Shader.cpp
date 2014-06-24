@@ -625,11 +625,20 @@ void Shader::registerSharedUniform( const char* a_name, SharedUniformFactoryBase
 
 void Shader::initialiseSharedUniforms()
 {
-	// initialise common shared uniforms
+	// texture related
 	Shader::registerSharedUniform("diffuseMap", new SharedIntUniformFactory(Material::Diffuse));
-	Shader::registerSharedUniform("normalMap", new SharedIntUniformFactory(Material::Normal));
+	Shader::registerSharedUniform("glowMap", new SharedIntUniformFactory(Material::Glow));
+	Shader::registerSharedUniform("ambientMap", new SharedIntUniformFactory(Material::Ambient));
 	Shader::registerSharedUniform("specularMap", new SharedIntUniformFactory(Material::Specular));
+	Shader::registerSharedUniform("glossMap", new SharedIntUniformFactory(Material::Gloss));
+	Shader::registerSharedUniform("normalMap", new SharedIntUniformFactory(Material::Normal));
+	Shader::registerSharedUniform("alphaMap", new SharedIntUniformFactory(Material::Alpha));
+	Shader::registerSharedUniform("environmentMap", new SharedIntUniformFactory(Material::Environment));
+	Shader::registerSharedUniform("displacementMap", new SharedIntUniformFactory(Material::Displacement));
+	Shader::registerSharedUniform("lightMap", new SharedIntUniformFactory(Material::Light));
+	Shader::registerSharedUniform("shadowMap", new SharedIntUniformFactory(Material::Shadow));
 
+	// camera related
 	Shader::registerSharedUniform("nearFar", new Shader::SharedUniformFactory<SharedNearFarUniform>());
 	Shader::registerSharedUniform("camera.position", new Shader::SharedUniformFactory<SharedCameraPositionUniform>());
 	Shader::registerSharedUniform("camera.view", new Shader::SharedUniformFactory<SharedCameraViewUniform>());
@@ -639,6 +648,7 @@ void Shader::initialiseSharedUniforms()
 	Shader::registerSharedUniform("camera.invView", new Shader::SharedUniformFactory<SharedCameraInvViewUniform>());
 	Shader::registerSharedUniform("camera.nearFar", new Shader::SharedUniformFactory<SharedNearFarUniform>());
 
+	// material related
 	Shader::registerSharedUniform("material.diffuse", new Shader::SharedUniformFactory<SharedMaterialDiffuseUniform>());
 	Shader::registerSharedUniform("material.ambient", new Shader::SharedUniformFactory<SharedMaterialAmbientUniform>());
 	Shader::registerSharedUniform("material.specular", new Shader::SharedUniformFactory<SharedMaterialSpecularUniform>());

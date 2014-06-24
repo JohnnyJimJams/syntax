@@ -94,10 +94,11 @@ public:
 			"../../bin/shaders/diffuse.frag"
 		};
 		syn::Shader* diffuseShader = resourceLibrary->createShader("diffuse", diffuseShaderFiles);
-	//	syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
+		syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
 		syn::Material* diffuseMaterial = resourceLibrary->createMaterial("diffuse");
 		diffuseMaterial->setShader(diffuseShader);
-		diffuseMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
+		diffuseMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
+		diffuseMaterial->setTexture(syn::Material::Environment, skyboxTexture);
 		
 		// create scene
 		m_scene = new syn::Node();
@@ -115,12 +116,20 @@ public:
 		skybox->setLocalScale(256);
 		m_scene->attachChild(skybox);
 
+		syn::Node* temp = new syn::Node();
+		m_scene->attachChild(temp);
+
 		syn::Mesh* box = new syn::Mesh();
 		box->setName("box");
 		box->setMaterial(diffuseMaterial);
 		box->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0|syn::Vertex::Normal, 32, 32));
 		box->setLocalScale(5);
-		m_scene->attachChild(box);
+		box->setLocalTranslation(10, 0, 0);
+		temp->attachChild(box);
+
+		syn::RotationController* rot = new syn::RotationController(glm::quarter_pi<float>(), glm::vec3(0, 1, 0));
+		temp->attachController(rot);
+		box->attachController(rot);
 
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
@@ -170,7 +179,7 @@ public:
 
 		m_scene->render();
 
-	//	debugRender();
+		debugRender();
 		
 		glfwSwapBuffers(m_window);
 	}
