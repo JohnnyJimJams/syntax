@@ -16,16 +16,9 @@ TODO List for Syntax:
 		If an artist uses FreezeTransforms then the vertices when loaded 
 		contain the transform offsets and the mesh's transform is identity, 
 		which is horrible for a parented hierarchy.
-		
-	- Textures need to change to allow HDR and sRGB, and keep track of pixel data.
-		Currently using SOIL for image loading which doesn't have great 
-		HDR support. I need a lightweight and flexible image loading system 
-		that supports HDR and sRGB.
-		Also need to allow texture pixel data to be loaded rather than 
-		just a GL texture handle.
-		
+
 	- Flexible Post-Effects pipeline.
-		Need to ressurrect my Deferred, HDR, DoF, SSAO and SMAA wrappers 
+		Need to resurrect my Deferred, HDR, DoF, SSAO and SMAA wrappers 
 		and refactor them to get rid of as much pointless overhead as possible.
 		Need to incorporate SSS and Motion Blur.
 	
@@ -34,3 +27,4 @@ TODO List for Syntax:
 		Incorporate modern lens effects and chromotic aberations.
 		
 	- Look into replacing SmartPointer with std::shared_ptr if possible.
+		Looked into this, and "object handles reference counting" works better for my architecture.
