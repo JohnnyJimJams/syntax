@@ -1,5 +1,4 @@
 #include <scene/Camera.h>
-#include <render/Shader.h>
 #include <glm/ext.hpp>
 
 namespace syn
@@ -18,14 +17,6 @@ Camera::Camera(	float a_fov /* = quarter_pi<float>() */, float a_aspect /* = 16/
 Camera::~Camera()
 {
 
-}
-
-void Camera::bind(Shader* a_shader)
-{
-	a_shader->setUniform("camera.position", m_globalTransform[3]);
-	a_shader->setUniform("camera.view", m_view);
-	a_shader->setUniform("camera.projection", m_projection);
-	a_shader->setUniform("camera.projectionView", m_projectionView);
 }
 
 void Camera::setPerspectiveProjection(float a_fov, float a_aspect, float a_near, float a_far)

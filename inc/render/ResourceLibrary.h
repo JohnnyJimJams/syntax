@@ -24,7 +24,7 @@ public:
 	// TODO: change to support sRGB as primary format, and retain access to texture pixel data if requested
 	Texture*		createTexture(const char* a_name, unsigned int a_width, unsigned int a_height, 
 								  unsigned int a_format, unsigned int a_channels, unsigned int a_dataType,
-								  unsigned int a_type = Texture::Texture2D, const void* a_data = nullptr);
+								  unsigned int a_type = Texture::Texture2D, const void* a_data = nullptr, bool a_ownData = false);
 	Texture*		loadTexture(const char* a_filename, unsigned int a_type = Texture::Texture2D);
 	Texture*		loadTextureCube(const char** a_filenames);
 	Texture*		reloadTexture(const char* a_filename);
@@ -52,14 +52,14 @@ public:
 	void			releaseShader(Shader* a_shader);
 	void			releaseAllShaders();
 	void			reloadShaders();
-	/*
+	
 	// Scenes
 	// TODO: change to use a plugin system to allow loading of different file extensions
 	Node*			loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight = nullptr, bool a_retainMeshData = false);
 	Node*			getScene(const char* a_name);
 	void			releaseScene(Node* a_node);
 	void			releaseAllScenes();
-	*/
+	
 	// Frame Buffers
 	FrameBuffer*	createFrameBuffer(const char* a_name, unsigned int a_width, unsigned int a_height, unsigned int a_targetCount = 1, bool a_depth = true, unsigned int* a_bufferFormat = nullptr, unsigned int* a_channels = nullptr, unsigned int* a_bufferType = nullptr);
 	FrameBuffer*	getFrameBuffer(const char* a_name);
@@ -68,12 +68,12 @@ public:
 
 private:
 	
-/*
+
 	void			fbxExtractObject(Node* a_parent, void* a_object, void* a_fbxScene, const char* a_path, bool a_retainMeshData);
 	void			fbxExtractMesh(Mesh* a_mesh, void* a_object, int a_material, const char* a_path, bool a_retainMeshData);
 	Material*		fbxExtractMaterial(void* a_mesh, int a_material, const char* a_path);
 
-	void			calculateTangentsBinormals(std::vector<Vertex>& a_vertices, const std::vector<unsigned int>& a_indices);*/
+	void			calculateTangentsBinormals(std::vector<Vertex>& a_vertices, const std::vector<unsigned int>& a_indices);
 
 private:
 

@@ -100,18 +100,11 @@ public:
 	
 	bool				isBound() const;
 
-	static Material*	getBoundMatterial();	
+	static Material*	getBoundMaterial();	
 
 private:
 
-	Material(const char* a_name, unsigned int a_id) 
-		:  m_id(a_id), m_name(new char[ strlen(a_name) + 1 ]), 
-		   m_ambient(1,1,1,1), m_diffuse(1,1,1,1), m_specular(1,1,1,1), m_emissive(0,0,0,0), m_roughness(1,0.001f),
-		   m_shader(nullptr)
-	   {
-		   strcpy(m_name,a_name);
-		   memset(m_textures,0,sizeof(Texture*)*TextureChannel_Count);
-	   }
+	Material(const char* a_name, unsigned int a_id);
 	virtual ~Material() { delete[] m_name; }
 
 	unsigned int	m_id;
@@ -129,6 +122,15 @@ private:
 
 	static Material*	sm_boundMaterial;
 };
+
+inline Material::Material(const char* a_name, unsigned int a_id)
+	: m_id(a_id), m_name(new char[strlen(a_name) + 1]),
+	m_ambient(1, 1, 1, 1), m_diffuse(1, 1, 1, 1), m_specular(1, 1, 1, 1), m_emissive(0, 0, 0, 0), m_roughness(1, 0.001f),
+	m_shader(Shader::getInvalidShader())
+{
+	strcpy(m_name, a_name);
+	memset(m_textures, 0, sizeof(Texture*)*TextureChannel_Count);
+}
 
 inline const char* Material::getName() const
 {
@@ -351,6 +353,11 @@ inline glm::vec2& Material::getRoughnessUniform()
 inline const glm::vec2& Material::getRoughnessUniform() const
 {
 	return m_roughness;
+}
+
+inline Material* Material::getBoundMaterial()
+{
+	return sm_boundMaterial;
 }
 
 } // namespace syn

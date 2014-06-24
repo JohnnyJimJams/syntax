@@ -3,7 +3,7 @@
 #include <utilities/HashFunctions.h>
 #include <GL/glew.h>
 #include <glm/ext.hpp>
-//#include <fbxsdk.h>
+#include <fbxsdk.h>
 #include <utilities/Log.h>
 #include <utilities/Assert.h>
 #include <algorithm>
@@ -31,7 +31,31 @@ ResourceLibrary::~ResourceLibrary()
 
 void ResourceLibrary::loadDefaults()
 {
-	// TODO: create default textures and "invalid" shader
+	// invalid shader
+	const char* invalidVS = "#version 330\n layout (location = 0) in vec4 position; out vec4 worldPosition; struct Camera { mat4 projectionView; };"
+		"uniform Camera camera; uniform mat4 worldTransform; void main(){worldPosition = worldTransform * position; gl_Position = camera.projectionView * worldPosition;}";
+	const char* invalidFS = "#version 330\n in vec4 worldPosition; out vec4 fragColour; void main(){"
+		"fragColour = vec4(1,0,1,1);	if (mod(worldPosition.x, 1.0) < 0.05f || mod(worldPosition.y, 1.0) < 0.05f || mod(worldPosition.z, 1.0) < 0.05f) fragColour = vec4(0,0,0,1);}";
+
+	Shader::sm_invalidShader = createShader("invalid");
+	Shader::sm_invalidShader->compileShaderFromString(Shader::Vertex, invalidVS);
+	Shader::sm_invalidShader->compileShaderFromString(Shader::Fragment, invalidFS);
+	if (Shader::sm_invalidShader->linkProgram() == false)
+	{
+		logError("Shader Link Error for shader [invalid]:\n");
+		logError(Shader::sm_invalidShader->getLastError());
+		log("\n");
+	}
+
+	// default textures
+	unsigned char white[] = { 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255 };
+	unsigned char black[] = { 0, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255 };
+	unsigned char pink[] = { 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255 };
+	unsigned char normal[] = { 128, 128, 255, 255, 128, 128, 255, 255, 128, 128, 255, 255, 128, 128, 255, 255 };
+	createTexture("white", 2, 2, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE, Texture::Texture2D, white);
+	createTexture("black", 2, 2, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE, Texture::Texture2D, black);
+	createTexture("pink", 2, 2, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE, Texture::Texture2D, pink);
+	createTexture("normal", 2, 2, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE, Texture::Texture2D, normal);
 }
 
 ResourceLibrary* ResourceLibrary::create()
@@ -60,7 +84,7 @@ Material* ResourceLibrary::getMaterialByIndex(unsigned int a_index)
 
 Texture* ResourceLibrary::createTexture(const char* a_name, unsigned int a_width, unsigned int a_height, 
 										unsigned int a_format, unsigned int a_channels, unsigned int a_dataType,
-										unsigned int a_type /* = Texture::Texture2D */, const void* a_data /* = nullptr */)
+										unsigned int a_type /* = Texture::Texture2D */, const void* a_data /* = nullptr */, bool a_ownData /* = false */)
 {
 	Texture* texture = nullptr;
 
@@ -82,7 +106,8 @@ Texture* ResourceLibrary::createTexture(const char* a_name, unsigned int a_width
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		texture->m_format = a_format;
-		texture->m_data = (unsigned char*)a_data;
+		if (a_ownData)
+			texture->m_data = (unsigned char*)a_data;
 		texture->m_width = a_width;
 		texture->m_height = a_height;
 		
@@ -510,7 +535,7 @@ void ResourceLibrary::releaseAllFrameBuffers()
 {
 	m_frameBuffers.clear();
 }
-/*
+
 Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight , bool a_retainMeshData )
 {
 	Node* root = nullptr;
@@ -547,8 +572,33 @@ Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambient
 	int lSDKMajor,  lSDKMinor,  lSDKRevision;
 	FbxManager::GetFileFormatVersion(lSDKMajor, lSDKMinor, lSDKRevision);
 
+/*	* // create a SdkManager
+		* FbxManager *lSdkManager = FbxManager::Create();
+	*
+		* // create an IOSettings object
+		* FbxIOSettings * ios = FbxIOSettings::Create(lSdkManager, IOSROOT);
+	*
+		* // set some IOSettings options 
+		* ios->SetBoolProp(IMP_FBX_MATERIAL, true);
+	*ios->SetBoolProp(IMP_FBX_TEXTURE, true);
+	*
+		* // create an empty scene
+		* FbxScene* lScene = FbxScene::Create(lSdkManager, "");
+	*
+		* // Create an importer.
+		* FbxImporter* lImporter = FbxImporter::Create(lSdkManager, "");
+	*
+		* // Initialize the importer by providing a filename and the IOSettings to use
+		* lImporter->Initialize("C:\\myfile.fbx", -1, ios);
+	*
+		* // Import the scene.
+		* lImporter->Import(lScene);
+	*
+		* // Destroy the importer.
+		* lImporter->Destroy();
+	*/
 	// Create an importer.
-	FbxImporter* lImporter = FbxImporter::Create(lSdkManager,"");
+	FbxImporter* lImporter = FbxImporter::Create(lSdkManager, "");
 	const bool lImportStatus = lImporter->Initialize(a_filename, -1, lSdkManager->GetIOSettings());
 
 	int lFileMajor, lFileMinor, lFileRevision;
@@ -557,10 +607,9 @@ Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambient
 	if ( !lImportStatus )
 	{
 		logError("Call to FbxImporter::Initialize() failed.\n");
-		logError("Error returned: %s\n\n", lImporter->GetLastErrorString());
+		logError("Error returned: %s\n\n", lImporter->GetStatus().GetErrorString());
 
-		if (lImporter->GetLastErrorID() == FbxIOBase::eFileVersionNotSupportedYet ||
-			lImporter->GetLastErrorID() == FbxIOBase::eFileVersionNotSupportedAnymore)
+		if (lImporter->GetStatus().GetCode() == FbxStatus::eInvalidFileVersion)
 		{
 			logError("FBX version number for this FBX SDK is %d.%d.%d\n", lSDKMajor, lSDKMinor, lSDKRevision);
 			logError("FBX version number for file %s is %d.%d.%d\n\n", a_filename, lFileMajor, lFileMinor, lFileRevision);
@@ -634,7 +683,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 
 	// build local transform
 	// use anim evaluator as bones store transforms in a different spot
-	FbxAMatrix local = ((FbxScene*)a_fbxScene)->GetEvaluator()->GetNodeLocalTransform(fbxNode);
+	FbxAMatrix local = ((FbxScene*)a_fbxScene)->GetAnimationEvaluator()->GetNodeLocalTransform(fbxNode);
 
 	glm::mat4 mLocalTransform( local[0][0], local[0][1], local[0][2], local[0][3],
 							   local[1][0], local[1][1], local[1][2], local[1][3],
@@ -809,7 +858,7 @@ void ResourceLibrary::fbxExtractMesh(Mesh* a_mesh, void* a_object, int a_materia
 
 			vertexAttributes |= Vertex::Position;
 
-// 		/*	if (fbxColours != nullptr)
+// 			if (fbxColours != nullptr)
 // 			{
 // 				switch (fbxColours->GetMappingMode())
 // 				{
@@ -1426,18 +1475,18 @@ void ResourceLibrary::calculateTangentsBinormals(std::vector<Vertex>& a_vertices
 		const glm::vec3& t = tan1[a].xyz;
 
 		// Gram-Schmidt orthogonalize
-		a_vertices[a].tangent = glm::vec4( glm::normalize<float>(t - n * glm::dot<float>(n, t)), 0 );
+		a_vertices[a].tangent = glm::vec4( glm::normalize(t - n * glm::dot(n, t)), 0 );
 
 		// Calculate handedness
-		a_vertices[a].tangent.w = (glm::dot<float>(glm::cross<float>(n.xyz, t.xyz), tan2[a].xyz) < 0.0F) ? 1.0F : -1.0F;
+		a_vertices[a].tangent.w = (glm::dot(glm::cross(n.xyz(), t.xyz()), tan2[a].xyz()) < 0.0F) ? 1.0F : -1.0F;
 
 		// calculate binormal
-		a_vertices[a].binormal = glm::vec4( glm::cross<float>(a_vertices[a].normal.xyz,a_vertices[a].tangent.xyz) * a_vertices[a].tangent.w, 0 );
+		a_vertices[a].binormal = glm::vec4( glm::cross(a_vertices[a].normal.xyz(),a_vertices[a].tangent.xyz()) * a_vertices[a].tangent.w, 0 );
 
 		a_vertices[a].tangent.w = 0;
 	}
 
 	delete[] tan1;
 }
-*/
+
 } // namespace syn

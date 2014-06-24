@@ -6,8 +6,6 @@
 namespace syn
 {
 
-class Shader;
-
 using glm::quarter_pi;
 
 DeclareSmartPtr(Camera);
@@ -20,8 +18,6 @@ public:
 
 	Camera(float a_fov = quarter_pi<float>(), float a_aspect = 16/9.f, float a_near = 0.1f, float a_far = 1000);
 	virtual ~Camera();
-
-	void				bind(Shader* a_shader);
 
 	bool				isActiveCamera() const;
 	void				setActive();

@@ -2,6 +2,7 @@
 
 #include <render/Shader.h>
 #include <scene/Camera.h>
+#include <render/Material.h>
 #include <glm/glm.hpp>
 
 namespace syn
@@ -311,6 +312,62 @@ public:
 	{
 		Shader::Uniform<glm::mat4>* uniform = (Shader::Uniform<glm::mat4>*)m_uniform;
 		uniform->set(Camera::getActiveCamera()->getGlobalTransform());
+	}
+};
+
+class SYNTAX_API SharedMaterialDiffuseUniform : public Shader::SharedUniformBase
+{
+public:
+
+	SharedMaterialDiffuseUniform(Shader::UniformBase* a_uniform) : SharedUniformBase(a_uniform) {}
+	virtual ~SharedMaterialDiffuseUniform() {}
+
+	virtual void set()
+	{
+		Shader::Uniform<glm::vec4>* uniform = (Shader::Uniform<glm::vec4>*)m_uniform;
+		uniform->set(Material::getBoundMaterial()->getDiffuse());
+	}
+};
+
+class SYNTAX_API SharedMaterialAmbientUniform : public Shader::SharedUniformBase
+{
+public:
+
+	SharedMaterialAmbientUniform(Shader::UniformBase* a_uniform) : SharedUniformBase(a_uniform) {}
+	virtual ~SharedMaterialAmbientUniform() {}
+
+	virtual void set()
+	{
+		Shader::Uniform<glm::vec4>* uniform = (Shader::Uniform<glm::vec4>*)m_uniform;
+		uniform->set(Material::getBoundMaterial()->getAmbient());
+	}
+};
+
+class SYNTAX_API SharedMaterialSpecularUniform : public Shader::SharedUniformBase
+{
+public:
+
+	SharedMaterialSpecularUniform(Shader::UniformBase* a_uniform) : SharedUniformBase(a_uniform) {}
+	virtual ~SharedMaterialSpecularUniform() {}
+
+	virtual void set()
+	{
+		Shader::Uniform<glm::vec4>* uniform = (Shader::Uniform<glm::vec4>*)m_uniform;
+		uniform->set(Material::getBoundMaterial()->getSpecular());
+	}
+};
+
+class SYNTAX_API SharedMaterialEmissiveUniform : public Shader::SharedUniformBase
+{
+public:
+
+	SharedMaterialEmissiveUniform(Shader::UniformBase* a_uniform) : SharedUniformBase(a_uniform) {}
+	virtual ~SharedMaterialEmissiveUniform() {}
+
+	virtual void set()
+	{
+		Shader::Uniform<glm::vec4>* uniform = (Shader::Uniform<glm::vec4>*)m_uniform;
+		uniform->set(Material::getBoundMaterial()->getEmissive());
 	}
 };
 

@@ -87,18 +87,18 @@ public:
 		syn::Material* skyboxMaterial = resourceLibrary->createMaterial("skybox");
 		skyboxMaterial->setShader( skyboxShader );
 		skyboxMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
-
+		
 		const char* diffuseShaderFiles[] = {
 			"../../bin/shaders/diffuse.vert",
 			nullptr, nullptr, nullptr,
 			"../../bin/shaders/diffuse.frag"
 		};
 		syn::Shader* diffuseShader = resourceLibrary->createShader("diffuse", diffuseShaderFiles);
-		syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
+	//	syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
 		syn::Material* diffuseMaterial = resourceLibrary->createMaterial("diffuse");
 		diffuseMaterial->setShader(diffuseShader);
-		diffuseMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
-
+		diffuseMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
+		
 		// create scene
 		m_scene = new syn::Node();
 		m_scene->setName("root");
@@ -118,7 +118,7 @@ public:
 		syn::Mesh* box = new syn::Mesh();
 		box->setName("box");
 		box->setMaterial(diffuseMaterial);
-		box->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0, 16, 16));
+		box->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0|syn::Vertex::Normal, 32, 32));
 		box->setLocalScale(5);
 		m_scene->attachChild(box);
 
@@ -170,7 +170,7 @@ public:
 
 		m_scene->render();
 
-		debugRender();
+	//	debugRender();
 		
 		glfwSwapBuffers(m_window);
 	}

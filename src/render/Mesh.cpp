@@ -16,14 +16,17 @@ void Mesh::build()
 
 void Mesh::render()
 {
-	// bind world transform?
-	Shader* shader = m_material->getShader();
-	if (shader == nullptr)
-		shader = Shader::getBoundShader();
-
-	shader->setUniform("worldTransform", m_globalTransform);
-
-	m_material->bind();
+	// TODO: get rid of need to use old setUniform() call for worldTransform
+	if (m_material == nullptr)
+	{
+		Shader::getInvalidShader()->setUniform("worldTransform", m_globalTransform);
+		Shader::getInvalidShader()->bind();
+	}
+	else
+	{
+		m_material->getShader()->setUniform("worldTransform", m_globalTransform);
+		m_material->bind();
+	}
 
 	// draw each chunk
 	for (auto& geometry : m_geometry)

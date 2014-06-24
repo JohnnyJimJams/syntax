@@ -30,19 +30,8 @@ const char* Material::getTextureChannelName(TextureChannel a_channel)
 
 void Material::bind()
 {
-	Shader* shader = m_shader;
-
-	if (shader == nullptr)
-		shader = Shader::getBoundShader();
-
 	if (sm_boundMaterial != this)
 	{
-		// bind material data
-		shader->setUniform("material.ambient", m_ambient);
-		shader->setUniform("material.diffuse", m_diffuse);
-		shader->setUniform("material.specular", m_specular);
-		shader->setUniform("material.emissive", m_emissive);
-
 		// bind textures
 		int channel = 0;
 		for (auto& texture : m_textures)
@@ -55,7 +44,7 @@ void Material::bind()
 		sm_boundMaterial = this;
 	}
 
-	shader->bind();
+	m_shader->bind();
 }
 
 } // namespace syn

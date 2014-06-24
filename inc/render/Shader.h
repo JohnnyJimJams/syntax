@@ -13,6 +13,7 @@ DeclareSmartPtr(Shader);
 class SYNTAX_API Shader : public RefObject
 {
 	friend class UniformBase;
+	friend class ResourceLibrary;
 
 public:
 
@@ -201,6 +202,8 @@ public:
 
 	static Shader*		getBoundShader();
 
+	static Shader*		getInvalidShader();
+
 	static const char*	getLastError();
 
 private:
@@ -225,6 +228,7 @@ private:
 
 	static char		sm_errorLog[2048];
 	static Shader*	sm_boundShader;
+	static Shader*	sm_invalidShader;
 };
 
 inline bool Shader::isBound() const
@@ -235,6 +239,11 @@ inline bool Shader::isBound() const
 inline Shader* Shader::getBoundShader()
 {
 	return sm_boundShader;
+}
+
+inline Shader* Shader::getInvalidShader()
+{
+	return sm_invalidShader;
 }
 
 inline const char* Shader::getLastError()

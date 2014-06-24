@@ -11,7 +11,9 @@ namespace syn
 {
 
 char Shader::sm_errorLog[2048] = {};
+
 Shader* Shader::sm_boundShader = nullptr;
+Shader* Shader::sm_invalidShader = nullptr;
 
 std::map<unsigned int, Shader::SharedUniformFactoryBase* > Shader::sm_sharedUniformFactories;
 
@@ -624,12 +626,10 @@ void Shader::registerSharedUniform( const char* a_name, SharedUniformFactoryBase
 void Shader::initialiseSharedUniforms()
 {
 	// initialise common shared uniforms
-//	Shader::registerSharedUniform("aoBuffer", new SharedIntUniformFactory(Material::AOBuffer));
-//	Shader::registerSharedUniform("lightBuffer", new SharedIntUniformFactory(Material::LightBuffer));
 	Shader::registerSharedUniform("diffuseMap", new SharedIntUniformFactory(Material::Diffuse));
 	Shader::registerSharedUniform("normalMap", new SharedIntUniformFactory(Material::Normal));
 	Shader::registerSharedUniform("specularMap", new SharedIntUniformFactory(Material::Specular));
-//	Shader::registerSharedUniform("albedoMap", new SharedIntUniformFactory(0));
+
 	Shader::registerSharedUniform("nearFar", new Shader::SharedUniformFactory<SharedNearFarUniform>());
 	Shader::registerSharedUniform("camera.position", new Shader::SharedUniformFactory<SharedCameraPositionUniform>());
 	Shader::registerSharedUniform("camera.view", new Shader::SharedUniformFactory<SharedCameraViewUniform>());
@@ -638,6 +638,11 @@ void Shader::initialiseSharedUniforms()
 	Shader::registerSharedUniform("camera.invProjection", new Shader::SharedUniformFactory<SharedCameraInvProjectionUniform>());
 	Shader::registerSharedUniform("camera.invView", new Shader::SharedUniformFactory<SharedCameraInvViewUniform>());
 	Shader::registerSharedUniform("camera.nearFar", new Shader::SharedUniformFactory<SharedNearFarUniform>());
+
+	Shader::registerSharedUniform("material.diffuse", new Shader::SharedUniformFactory<SharedMaterialDiffuseUniform>());
+	Shader::registerSharedUniform("material.ambient", new Shader::SharedUniformFactory<SharedMaterialAmbientUniform>());
+	Shader::registerSharedUniform("material.specular", new Shader::SharedUniformFactory<SharedMaterialSpecularUniform>());
+	Shader::registerSharedUniform("material.emissive", new Shader::SharedUniformFactory<SharedMaterialEmissiveUniform>());
 }
 
 void Shader::destroySharedUniforms()
