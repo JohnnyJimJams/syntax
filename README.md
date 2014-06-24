@@ -9,8 +9,8 @@ Before building run cmake on glfw within the dep folder, then build it in Releas
 Uses the Autodesk FBX SDK version 2015.1
 
 Current dependancies:
-  - GLM
-  - GLFW
+  - GLM (sub-module)
+  - GLFW (sub-module)
   - GLEW
-  - STB
+  - STB (sub-module)
   - FBX SDK (not contained within /dep/ folder)
