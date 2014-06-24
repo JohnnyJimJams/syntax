@@ -28,7 +28,7 @@ public:
 		glfwDefaultWindowHints();
 
 		// turn on 8x AA
-		glfwWindowHint(GLFW_SAMPLES, 8);
+		glfwWindowHint(GLFW_SAMPLES, 16);
 
 		// create a windowed mode window and its OpenGL context
 		m_window = glfwCreateWindow(1280, 720, "Syntax Unit Test", nullptr, nullptr);
@@ -88,17 +88,19 @@ public:
 		skyboxMaterial->setShader( skyboxShader );
 		skyboxMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
 		
-		const char* diffuseShaderFiles[] = {
-			"../../bin/shaders/diffuse.vert",
+		const char* glassShaderFiles[] = {
+			"../../bin/shaders/glass.vert",
 			nullptr, nullptr, nullptr,
-			"../../bin/shaders/diffuse.frag"
+			"../../bin/shaders/glass.frag"
 		};
-		syn::Shader* diffuseShader = resourceLibrary->createShader("diffuse", diffuseShaderFiles);
+		syn::Shader* glassShader = resourceLibrary->createShader("glass", glassShaderFiles);
+
+		syn::Material* glassMaterial = resourceLibrary->createMaterial("glass");
+		glassMaterial->setShader(glassShader);
+		glassMaterial->setTexture(syn::Material::Environment, skyboxTexture);
+
 		syn::Texture* diffuseTexture = resourceLibrary->loadTexture("../../bin/textures/numbered_grid.tga");
-		syn::Material* diffuseMaterial = resourceLibrary->createMaterial("diffuse");
-		diffuseMaterial->setShader(diffuseShader);
-		diffuseMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
-		diffuseMaterial->setTexture(syn::Material::Environment, skyboxTexture);
+		glassMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
 		
 		// create scene
 		m_scene = new syn::Node();
@@ -119,17 +121,25 @@ public:
 		syn::Node* temp = new syn::Node();
 		m_scene->attachChild(temp);
 
-		syn::Mesh* box = new syn::Mesh();
-		box->setName("box");
-		box->setMaterial(diffuseMaterial);
-		box->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0|syn::Vertex::Normal, 32, 32));
-		box->setLocalScale(5);
-		box->setLocalTranslation(10, 0, 0);
-		temp->attachChild(box);
+		syn::Mesh* sphere = new syn::Mesh();
+		sphere->setName("sphere");
+		sphere->setMaterial(glassMaterial);
+		sphere->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0 | syn::Vertex::Normal, 32, 32));
+		sphere->setLocalScale(5);
+		sphere->setLocalTranslation(10, 0, 0);
+		temp->attachChild(sphere);
 
 		syn::RotationController* rot = new syn::RotationController(glm::quarter_pi<float>(), glm::vec3(0, 1, 0));
 		temp->attachController(rot);
-		box->attachController(rot);
+
+		syn::Node* fbx = resourceLibrary->loadFBXScene("../../bin/models/stanford/bunny.fbx");
+		m_scene->attachChild(fbx);
+
+		fbx->attachController(rot);
+
+		// hacked together for now
+		resourceLibrary->getMaterial("lambert1")->setShader(glassShader);
+		resourceLibrary->getMaterial("lambert1")->setTexture(syn::Material::Environment, skyboxTexture);
 
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
@@ -179,7 +189,7 @@ public:
 
 		m_scene->render();
 
-		debugRender();
+	//	debugRender();
 		
 		glfwSwapBuffers(m_window);
 	}

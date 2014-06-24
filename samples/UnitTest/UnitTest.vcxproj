@@ -91,6 +91,8 @@
   <ItemGroup>
     <None Include="..\..\bin\shaders\diffuse.frag" />
     <None Include="..\..\bin\shaders\diffuse.vert" />
+    <None Include="..\..\bin\shaders\glass.frag" />
+    <None Include="..\..\bin\shaders\glass.vert" />
     <None Include="..\..\bin\shaders\skybox.frag" />
     <None Include="..\..\bin\shaders\skybox.vert" />
   </ItemGroup>
