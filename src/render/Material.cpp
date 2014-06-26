@@ -6,6 +6,7 @@ namespace syn
 {
 
 Material* Material::sm_boundMaterial = nullptr;
+Material* Material::sm_invalidMaterial = nullptr;
 
 const char* Material::getTextureChannelName(TextureChannel a_channel)
 {

@@ -102,6 +102,8 @@ public:
 
 	static Material*	getBoundMaterial();	
 
+	static Material*	getInvalidMaterial();
+
 private:
 
 	Material(const char* a_name, unsigned int a_id);
@@ -121,6 +123,7 @@ private:
 	ShaderPtr		m_shader;
 
 	static Material*	sm_boundMaterial;
+	static Material*	sm_invalidMaterial;
 };
 
 inline Material::Material(const char* a_name, unsigned int a_id)
@@ -358,6 +361,11 @@ inline const glm::vec2& Material::getRoughnessUniform() const
 inline Material* Material::getBoundMaterial()
 {
 	return sm_boundMaterial;
+}
+
+inline Material* Material::getInvalidMaterial()
+{
+	return sm_invalidMaterial;
 }
 
 } // namespace syn

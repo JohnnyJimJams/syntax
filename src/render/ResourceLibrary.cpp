@@ -32,10 +32,10 @@ ResourceLibrary::~ResourceLibrary()
 void ResourceLibrary::loadDefaults()
 {
 	// invalid shader
-	const char* invalidVS = "#version 330\n layout (location = 0) in vec4 position; out vec4 worldPosition; struct Camera { mat4 projectionView; };"
-		"uniform Camera camera; uniform mat4 worldTransform; void main(){worldPosition = worldTransform * position; gl_Position = camera.projectionView * worldPosition;}";
-	const char* invalidFS = "#version 330\n in vec4 worldPosition; out vec4 fragColour; void main(){"
-		"fragColour = vec4(1,0,1,1);	if (mod(worldPosition.x, 1.0) < 0.05f || mod(worldPosition.y, 1.0) < 0.05f || mod(worldPosition.z, 1.0) < 0.05f) fragColour = vec4(0,0,0,1);}";
+	const char* invalidVS = "#version 330\n layout (location = 0) in vec4 position; out vec4 localPosition; struct Camera { mat4 projectionView; };"
+		"uniform Camera camera; uniform mat4 worldTransform; void main(){localPosition = position; gl_Position = camera.projectionView * worldTransform * localPosition;}";
+	const char* invalidFS = "#version 330\n in vec4 localPosition; out vec4 fragColour; void main(){"
+		"fragColour = vec4(1,0,1,1);	if (mod(localPosition.x, 1.0) < 0.05f || mod(localPosition.y, 1.0) < 0.05f || mod(localPosition.z, 1.0) < 0.05f) fragColour = vec4(0,0,0,1);}";
 
 	Shader::sm_invalidShader = createShader("invalid");
 	Shader::sm_invalidShader->compileShaderFromString(Shader::Vertex, invalidVS);
@@ -46,6 +46,9 @@ void ResourceLibrary::loadDefaults()
 		logError(Shader::sm_invalidShader->getLastError());
 		log("\n");
 	}
+
+	// this doesn't seem needed :(
+	Material::sm_invalidMaterial = createMaterial("invalid");
 
 	// default textures
 	unsigned char white[] = { 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255 };

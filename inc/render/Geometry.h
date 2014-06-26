@@ -103,6 +103,7 @@ public:
 	unsigned int	getIndexCount() const;
 
 	void			remapVertices(const Vertex* a_vertices);
+	void			remapVertices(unsigned int a_offset, unsigned int a_count, const Vertex* a_vertices);
 
 	// create basic primitives
 	static Geometry*	createBox(unsigned int a_vertexAttributes);

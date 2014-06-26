@@ -15,8 +15,8 @@ class SYNTAX_API Mesh : public SceneObject
 
 public:
 
-	Mesh() : m_castsShadow(true) {}
-	Mesh(const char* a_name) : SceneObject(a_name), m_castsShadow(true) {}
+	Mesh();
+	Mesh(const char* a_name);
 	virtual ~Mesh() {}
 
 	virtual void	build();
@@ -42,6 +42,21 @@ protected:
 	std::vector< GeometryPtr >	m_geometry;
 	bool						m_castsShadow;
 };
+
+inline Mesh::Mesh()
+	: m_material(Material::getInvalidMaterial()),
+	m_castsShadow(true)
+{
+
+}
+
+inline Mesh::Mesh(const char* a_name) 
+	: SceneObject(a_name),
+	m_material(Material::getInvalidMaterial()),
+	m_castsShadow(true)
+{
+
+}
 
 inline void Mesh::setMaterial( Material* a_material )
 {

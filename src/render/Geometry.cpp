@@ -209,9 +209,13 @@ void Geometry::render()
 void Geometry::remapVertices(const Vertex* a_vertices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_bufferObjects[BufferType_Vertex0]);
-	Vertex* vertices = (Vertex*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	memcpy(vertices, a_vertices, sizeof(Vertex) * m_vertexCount);
-	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * m_vertexCount, a_vertices);
+}
+
+void Geometry::remapVertices(unsigned int a_offset, unsigned int a_count, const Vertex* a_vertices)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, m_bufferObjects[BufferType_Vertex0]);
+	glBufferSubData(GL_ARRAY_BUFFER, a_offset, sizeof(Vertex) * a_count, a_vertices);
 }
 
 Geometry* Geometry::createBox(unsigned int a_vertexAttributes)
