@@ -536,9 +536,9 @@ void ResourceLibrary::releaseAllFrameBuffers()
 	m_frameBuffers.clear();
 }
 
-Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight , bool a_retainMeshData )
+SceneNode* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight, bool a_retainMeshData)
 {
-	Node* root = nullptr;
+	SceneNode* root = nullptr;
 
 	unsigned int id = SynStringHash(a_filename);
 
@@ -651,7 +651,7 @@ Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambient
 			path = "";
 		}
 
-		root = new Node();
+		root = new SceneNode();
 		root->setName(a_filename);
 		
 		// grab the ambient light data from the scene
@@ -677,7 +677,7 @@ Node* ResourceLibrary::loadFBXScene(const char* a_filename, glm::vec4* a_ambient
 }
 
 //////////////////////////////////////////////////////////////////////////
-void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_fbxScene, const char* a_path, bool a_retainMeshData)
+void ResourceLibrary::fbxExtractObject(SceneNode* a_parent, void* a_object, void* a_fbxScene, const char* a_path, bool a_retainMeshData)
 {
 	FbxNode* fbxNode = (FbxNode*)a_object;
 
@@ -693,7 +693,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 	SceneObject* node = nullptr;
 	if (fbxNode->GetChildCount() > 0)
 	{
-		node = new Node();
+		node = new SceneNode();
 		if (strlen(fbxNode->GetName()) > 0)
 			node->setName(fbxNode->GetName());
 	}
@@ -718,7 +718,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 				{
 					if (node == nullptr)
 					{
-						node = new Node();
+						node = new SceneNode();
 						if (strlen(fbxNode->GetName()) > 0)
 							node->setName(fbxNode->GetName());
 					}
@@ -733,7 +733,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 						name += fbxNode->GetMaterial(i)->GetName();
 						mesh->setName(name.c_str());						
 
-						((Node*)node)->attachChild(mesh);
+						((SceneNode*)node)->attachChild(mesh);
 					}
 				}
 				else
@@ -754,7 +754,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 						if (strlen(fbxNode->GetName()) > 0)
 							mesh->setName(fbxNode->GetName());
 
-						((Node*)node)->attachChild(mesh);
+						((SceneNode*)node)->attachChild(mesh);
 					}
 				}
 			}
@@ -806,7 +806,7 @@ void ResourceLibrary::fbxExtractObject(Node* a_parent, void* a_object, void* a_f
 	// children
 	for (i = 0; i < fbxNode->GetChildCount(); i++)
 	{
-		fbxExtractObject((Node*)node, (void*)fbxNode->GetChild(i), a_fbxScene, a_path, a_retainMeshData);
+		fbxExtractObject((SceneNode*)node, (void*)fbxNode->GetChild(i), a_fbxScene, a_path, a_retainMeshData);
 	}
 }
 

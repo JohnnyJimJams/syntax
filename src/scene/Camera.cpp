@@ -4,7 +4,7 @@
 namespace syn
 {
 
-SynRTTIDerived(Camera,Node);
+SynRTTIDerived(Camera, SceneNode);
 
 Camera* Camera::sm_activeCamera = nullptr;
 
@@ -117,7 +117,7 @@ void Camera::lookAtFrom(const glm::vec4& a_eye,
 
 void Camera::updateGlobalTransform()
 {
-	Node::updateGlobalTransform();
+	SceneNode::updateGlobalTransform();
 
 	// remove scale
 	glm::mat4 view = m_globalTransform;

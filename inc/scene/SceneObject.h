@@ -7,7 +7,7 @@
 namespace syn
 {
 
-class Node;
+class SceneNode;
 class Renderer;
 
 DeclareSmartPtr(SceneObject);
@@ -87,8 +87,8 @@ public:
 	// update controllers attached to this object
 	virtual void	updateControllers( float a_deltaTime );
 
-	void			setParent(Node* a_node);
-	Node*			getParent();
+	void			setParent(SceneNode* a_node);
+	SceneNode*		getParent();
 
 	// traversal
 	template <class T>
@@ -105,7 +105,7 @@ private:
 protected:
 
 	bool			m_visible;
-	Node*			m_parent;
+	SceneNode*		m_parent;
 
 	glm::mat4		m_localTransform;
 	glm::mat4		m_globalTransform;
@@ -120,7 +120,7 @@ void SceneObject::traverse(SceneObject* a_object, T& a_functor)
 
 	if (a_object->isNode())
 	{
-		Node* node = (Node*)a_object;
+		SceneNode* node = (SceneNode*)a_object;
 		for (auto& c : node->m_children)
 		{
 			traverse(c,a_functor);
@@ -136,7 +136,7 @@ bool SceneObject::traverseFirstStop(SceneObject* a_object, T& a_functor)
 
 	if (a_object->isNode())
 	{
-		Node* node = (Node*)this;
+		SceneNode* node = (SceneNode*)this;
 		for (auto& c : node->m_children)
 		{
 			if (traverseFirstStop(c,a_functor) == false)
@@ -207,12 +207,12 @@ inline void SceneObject::detachAllControllers()
 	m_controllers.clear();
 }
 
-inline void SceneObject::setParent(Node* a_node)
+inline void SceneObject::setParent(SceneNode* a_node)
 {
 	m_parent = a_node;
 }
 
-inline Node* SceneObject::getParent()
+inline SceneNode* SceneObject::getParent()
 {
 	return m_parent;
 }

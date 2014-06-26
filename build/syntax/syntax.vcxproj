@@ -25,7 +25,7 @@
     <ClInclude Include="..\..\inc\RTTI.h" />
     <ClInclude Include="..\..\inc\scene\Camera.h" />
     <ClInclude Include="..\..\inc\scene\FlyCamera.h" />
-    <ClInclude Include="..\..\inc\scene\Node.h" />
+    <ClInclude Include="..\..\inc\scene\SceneNode.h" />
     <ClInclude Include="..\..\inc\scene\SceneController.h" />
     <ClInclude Include="..\..\inc\scene\SceneObject.h" />
     <ClInclude Include="..\..\inc\SmartPointer.h" />
@@ -53,7 +53,7 @@
     <ClCompile Include="..\..\src\Application.cpp" />
     <ClCompile Include="..\..\src\scene\Camera.cpp" />
     <ClCompile Include="..\..\src\scene\FlyCamera.cpp" />
-    <ClCompile Include="..\..\src\scene\Node.cpp" />
+    <ClCompile Include="..\..\src\scene\SceneNode.cpp" />
     <ClCompile Include="..\..\src\scene\SceneController.cpp" />
     <ClCompile Include="..\..\src\scene\SceneObject.cpp" />
     <ClCompile Include="..\..\src\utilities\Assert.cpp" />

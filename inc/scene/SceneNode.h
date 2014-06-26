@@ -6,9 +6,9 @@
 namespace syn
 {
 
-DeclareSmartPtr(Node);
+	DeclareSmartPtr(SceneNode);
 
-class SYNTAX_API Node : public SceneObject
+class SYNTAX_API SceneNode : public SceneObject
 {
 	friend class SceneObject;
 
@@ -18,9 +18,9 @@ public:
 
 	typedef std::vector< SceneObjectPtr >	ChildArray;
 
-	Node();
-	Node(const char* a_name);
-	virtual ~Node();
+	SceneNode();
+	SceneNode(const char* a_name);
+	virtual ~SceneNode();
 
 	virtual void	build();
 
@@ -48,36 +48,36 @@ public:
 
 private:
 
-	Node(const Node& a_rhs);
-	Node& operator = (const Node& a_rhs);
+	SceneNode(const SceneNode& a_rhs);
+	SceneNode& operator = (const SceneNode& a_rhs);
 
 protected:
 
 	ChildArray	m_children;
 };
 
-inline Node::Node()
+inline SceneNode::SceneNode()
 {
 
 }
 
-inline Node::Node(const char* a_name)
+inline SceneNode::SceneNode(const char* a_name)
 	: SceneObject(a_name)
 {
 
 }
 
-inline Node::~Node()
+inline SceneNode::~SceneNode()
 {
 
 }
 
-inline unsigned int Node::getChildCount() const
+inline unsigned int SceneNode::getChildCount() const
 {
 	return m_children.size();
 }
 
-inline SceneObject* Node::getChild(unsigned int a_index) const
+inline SceneObject* SceneNode::getChild(unsigned int a_index) const
 {
 	return m_children[a_index];
 }

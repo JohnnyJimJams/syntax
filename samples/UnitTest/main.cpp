@@ -15,9 +15,9 @@ public:
 	TestApp() : m_fps(0), m_window(nullptr){}
 	virtual ~TestApp() {}
 
-	float			m_fps;
-	GLFWwindow*		m_window;
-	syn::NodePtr	m_scene;
+	float				m_fps;
+	GLFWwindow*			m_window;
+	syn::SceneNodePtr	m_scene;
 
 	virtual bool onCreate(int a_argc, char* a_argv[])
 	{
@@ -103,7 +103,7 @@ public:
 		glassMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
 		
 		// create scene
-		m_scene = new syn::Node("root");
+		m_scene = new syn::SceneNode("root");
 
 		syn::Camera* camera = new syn::FlyCamera(10);
 		camera->lookAtFrom(glm::vec3(10), glm::vec3(0), glm::vec3(0, 1, 0));
@@ -116,7 +116,7 @@ public:
 		skybox->setLocalScale(256);
 		m_scene->attachChild(skybox);
 
-		syn::Node* temp = new syn::Node();
+		syn::SceneNode* temp = new syn::SceneNode();
 		m_scene->attachChild(temp);
 
 		syn::Mesh* sphere = new syn::Mesh("sphere");
@@ -129,7 +129,7 @@ public:
 		syn::RotationController* rot = new syn::RotationController(glm::quarter_pi<float>(), glm::vec3(0, 1, 0));
 		temp->attachController(rot);
 
-		syn::Node* fbx = resourceLibrary->loadFBXScene("../../bin/models/stanford/bunny.fbx");
+		syn::SceneNode* fbx = resourceLibrary->loadFBXScene("../../bin/models/stanford/bunny.fbx");
 		m_scene->attachChild(fbx);
 
 		fbx->attachController(rot);

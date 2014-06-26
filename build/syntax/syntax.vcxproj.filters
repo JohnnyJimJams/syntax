@@ -39,9 +39,6 @@
     <ClInclude Include="..\..\inc\scene\Camera.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\inc\scene\Node.h">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\inc\scene\SceneController.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -81,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="..\..\inc\RefObject.h" />
     <ClInclude Include="..\..\inc\SmartPointer.h" />
+    <ClInclude Include="..\..\inc\scene\SceneNode.h">
+      <Filter>scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Object.cpp" />
@@ -128,9 +128,6 @@
     <ClCompile Include="..\..\src\scene\Camera.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\scene\Node.cpp">
-      <Filter>scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\scene\SceneController.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -141,5 +138,8 @@
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\RefObject.cpp" />
+    <ClCompile Include="..\..\src\scene\SceneNode.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
-#include <scene/Node.h>
+#include <scene/SceneNode.h>
 
 namespace syn
 {
 
-SynRTTIDerived(Node,SceneObject);
+SynRTTIDerived(SceneNode, SceneObject);
 
-void Node::build()
+void SceneNode::build()
 {
 	for (auto& child : m_children)
 	{
@@ -13,7 +13,7 @@ void Node::build()
 	}
 }
 
-void Node::update(float a_deltaTime)
+void SceneNode::update(float a_deltaTime)
 {
 	SceneObject::update(a_deltaTime);
 
@@ -23,7 +23,7 @@ void Node::update(float a_deltaTime)
 	}
 }
 
-void Node::render()
+void SceneNode::render()
 {
 	if (m_visible == true)
 	{
@@ -36,14 +36,14 @@ void Node::render()
 	}
 }
 
-void Node::attachChild(SceneObject* a_child)
+void SceneNode::attachChild(SceneObject* a_child)
 {
 	m_children.push_back( a_child );
 	a_child->setParent( this );
 	a_child->updateGlobalTransform();
 }
 
-void Node::detachChild(SceneObject* a_child)
+void SceneNode::detachChild(SceneObject* a_child)
 {
 	auto iter = m_children.begin();
 	auto end = m_children.end();
@@ -61,13 +61,13 @@ void Node::detachChild(SceneObject* a_child)
 	}	
 }
 
-void Node::detachFromParent()
+void SceneNode::detachFromParent()
 {
 	if (m_parent)
 		m_parent->detachChild(this);
 }
 
-void Node::updateGlobalTransform()
+void SceneNode::updateGlobalTransform()
 {
 	SceneObject::updateGlobalTransform();
 
@@ -77,7 +77,7 @@ void Node::updateGlobalTransform()
 	}
 }
 
-Object* Node::getObjectByName(const char* a_name)
+Object* SceneNode::getObjectByName(const char* a_name)
 {
 	if (strcmp(m_name,a_name) == 0)
 		return this;
@@ -91,7 +91,7 @@ Object* Node::getObjectByName(const char* a_name)
 	return nullptr;
 }
 
-void Node::getAllObjectsByName(const char* a_name, std::vector<Object*>& a_objects)
+void SceneNode::getAllObjectsByName(const char* a_name, std::vector<Object*>& a_objects)
 {
 	if (strcmp(m_name, a_name) == 0)
 		a_objects.push_back(this);

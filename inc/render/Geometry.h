@@ -1,6 +1,8 @@
 #pragma once
 
-#include <scene/Node.h>
+#include <RefObject.h>
+#include <glm/glm.hpp>
+#include <memory>
 
 namespace syn
 {

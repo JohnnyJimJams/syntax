@@ -1,5 +1,5 @@
 #include <scene/SceneObject.h>
-#include <scene/Node.h>
+#include <scene/SceneNode.h>
 #include <glm/ext.hpp>
 
 namespace syn

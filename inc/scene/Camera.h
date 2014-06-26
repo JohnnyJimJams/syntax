@@ -1,6 +1,6 @@
 #pragma once
 
-#include <scene/Node.h>
+#include <scene/SceneNode.h>
 #include <glm/ext.hpp>
 
 namespace syn
@@ -10,7 +10,7 @@ using glm::quarter_pi;
 
 DeclareSmartPtr(Camera);
 
-class SYNTAX_API Camera : public Node
+class SYNTAX_API Camera : public SceneNode
 {
 	SynRTTI;
 

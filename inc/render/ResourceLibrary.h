@@ -5,7 +5,7 @@
 #include <render/Material.h>
 #include <render/Geometry.h>
 #include <render/FrameBuffer.h>
-#include <scene/Node.h>
+#include <scene/SceneNode.h>
 
 namespace syn
 {
@@ -55,9 +55,9 @@ public:
 	
 	// Scenes
 	// TODO: change to use a plugin system to allow loading of different file extensions
-	Node*			loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight = nullptr, bool a_retainMeshData = false);
-	Node*			getScene(const char* a_name);
-	void			releaseScene(Node* a_node);
+	SceneNode*		loadFBXScene(const char* a_filename, glm::vec4* a_ambientLight = nullptr, bool a_retainMeshData = false);
+	SceneNode*		getScene(const char* a_name);
+	void			releaseScene(SceneNode* a_node);
 	void			releaseAllScenes();
 	
 	// Frame Buffers
@@ -69,7 +69,7 @@ public:
 private:
 	
 
-	void			fbxExtractObject(Node* a_parent, void* a_object, void* a_fbxScene, const char* a_path, bool a_retainMeshData);
+	void			fbxExtractObject(SceneNode* a_parent, void* a_object, void* a_fbxScene, const char* a_path, bool a_retainMeshData);
 	void			fbxExtractMesh(Mesh* a_mesh, void* a_object, int a_material, const char* a_path, bool a_retainMeshData);
 	Material*		fbxExtractMaterial(void* a_mesh, int a_material, const char* a_path);
 
@@ -85,7 +85,7 @@ private:
 	std::map< unsigned int, TexturePtr >		m_textures;
 	std::map< unsigned int, ShaderPtr >			m_shaders;
 	std::map< unsigned int, MaterialPtr >		m_materials;
-	std::map< unsigned int, NodePtr >			m_scenes;
+	std::map< unsigned int, SceneNodePtr >		m_scenes;
 	std::map< unsigned int, FrameBufferPtr >	m_frameBuffers;
 
 	static ResourceLibrary*	sm_singleton;
