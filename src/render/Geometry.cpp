@@ -252,35 +252,35 @@ Geometry* Geometry::createBox(unsigned int a_vertexAttributes)
 
 	if ((a_vertexAttributes & Vertex::Normal) != 0)
 	{
-		vertices[0].normal = glm::vec4(0, 0, -1, 1);
-		vertices[1].normal = glm::vec4(0, 0, -1, 1);
-		vertices[2].normal = glm::vec4(0, 0, -1, 1);
-		vertices[3].normal = glm::vec4(0, 0, -1, 1);
+		vertices[0].normal = glm::vec4(0, 0, -1, 0);
+		vertices[1].normal = glm::vec4(0, 0, -1, 0);
+		vertices[2].normal = glm::vec4(0, 0, -1, 0);
+		vertices[3].normal = glm::vec4(0, 0, -1, 0);
 
-		vertices[4].normal = glm::vec4(1, 0, 0, 1);
-		vertices[5].normal = glm::vec4(1, 0, 0, 1);
-		vertices[6].normal = glm::vec4(1, 0, 0, 1);
-		vertices[7].normal = glm::vec4(1, 0, 0, 1);
+		vertices[4].normal = glm::vec4(1, 0, 0, 0);
+		vertices[5].normal = glm::vec4(1, 0, 0, 0);
+		vertices[6].normal = glm::vec4(1, 0, 0, 0);
+		vertices[7].normal = glm::vec4(1, 0, 0, 0);
 
-		vertices[8].normal = glm::vec4(0, 0, 1, 1);
-		vertices[9].normal = glm::vec4(0, 0, 1, 1);
-		vertices[10].normal = glm::vec4(0, 0, 1, 1);
-		vertices[11].normal = glm::vec4(0, 0, 1, 1);
+		vertices[8].normal = glm::vec4(0, 0, 1, 0);
+		vertices[9].normal = glm::vec4(0, 0, 1, 0);
+		vertices[10].normal = glm::vec4(0, 0, 1, 0);
+		vertices[11].normal = glm::vec4(0, 0, 1, 0);
 
-		vertices[12].normal = glm::vec4(-1, 0, 0, 1);
-		vertices[13].normal = glm::vec4(-1, 0, 0, 1);
-		vertices[14].normal = glm::vec4(-1, 0, 0, 1);
-		vertices[15].normal = glm::vec4(-1, 0, 0, 1);
+		vertices[12].normal = glm::vec4(-1, 0, 0, 0);
+		vertices[13].normal = glm::vec4(-1, 0, 0, 0);
+		vertices[14].normal = glm::vec4(-1, 0, 0, 0);
+		vertices[15].normal = glm::vec4(-1, 0, 0, 0);
 
-		vertices[16].normal = glm::vec4(0, 1, 0, 1);
-		vertices[17].normal = glm::vec4(0, 1, 0, 1);
-		vertices[18].normal = glm::vec4(0, 1, 0, 1);
-		vertices[19].normal = glm::vec4(0, 1, 0, 1);
+		vertices[16].normal = glm::vec4(0, 1, 0, 0);
+		vertices[17].normal = glm::vec4(0, 1, 0, 0);
+		vertices[18].normal = glm::vec4(0, 1, 0, 0);
+		vertices[19].normal = glm::vec4(0, 1, 0, 0);
 
-		vertices[20].normal = glm::vec4(0, -1, 0, 1);
-		vertices[21].normal = glm::vec4(0, -1, 0, 1);
-		vertices[22].normal = glm::vec4(0, -1, 0, 1);
-		vertices[23].normal = glm::vec4(0, -1, 0, 1);
+		vertices[20].normal = glm::vec4(0, -1, 0, 0);
+		vertices[21].normal = glm::vec4(0, -1, 0, 0);
+		vertices[22].normal = glm::vec4(0, -1, 0, 0);
+		vertices[23].normal = glm::vec4(0, -1, 0, 0);
 	}
 
 	if ((a_vertexAttributes & Vertex::TexCoord0) != 0)

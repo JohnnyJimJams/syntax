@@ -19,12 +19,16 @@ struct Camera
 uniform Camera camera;
 
 const float refractFactor = 0.975;
-const float reflectFactor = 0.1f;
+const float reflectFactor = 0.1;
 
 void main()
 {
-	vec3 refl = reflect( normalize(worldPosition.xyz - camera.position.xyz), worldNormal.xyz );
-	vec3 refr = refract( normalize(worldPosition.xyz - camera.position.xyz), worldNormal.xyz, refractFactor );							   
+	vec3 V = normalize(worldPosition.xyz - camera.position.xyz);
+	vec3 N = normalize(worldNormal.xyz);
+
+	vec3 refl = reflect( V, N );
+	vec3 refr = refract( V, N, refractFactor );		
+						   
 	FragColour.rgb = mix( texture( environmentMap, refr ).rgb, texture( environmentMap, refl ).rgb, reflectFactor );
 	
 	FragColour.a = 1;

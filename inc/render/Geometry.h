@@ -34,9 +34,9 @@ struct Vertex
 		TexCoord0	=	128,
 		TexCoord1	=	256,
 
-		Dynamic		= 512,
+		Dynamic		=	512,
 
-		NormalMapped = Normal | Tangent | BiNormal | TexCoord0,
+		NormalMapped = Position | Normal | Tangent | BiNormal | TexCoord0,
 	};
 
 	glm::vec4	position;

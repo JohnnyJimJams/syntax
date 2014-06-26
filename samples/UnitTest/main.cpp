@@ -126,6 +126,13 @@ public:
 		sphere->setLocalTranslation(10, 0, 0);
 		temp->attachChild(sphere);
 
+		syn::Mesh* box = new syn::Mesh("box");
+		box->setMaterial(glassMaterial);
+		box->attachGeometry(syn::Geometry::createBox(syn::Vertex::TexCoord0 | syn::Vertex::Normal));
+		box->setLocalScale(5);
+		box->setLocalTranslation(-10, 0, 0);
+		temp->attachChild(box);
+
 		syn::RotationController* rot = new syn::RotationController(glm::quarter_pi<float>(), glm::vec3(0, 1, 0));
 		temp->attachController(rot);
 
@@ -140,7 +147,7 @@ public:
 
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+	//	glEnable(GL_CULL_FACE);
 
 		return true;
 	}
