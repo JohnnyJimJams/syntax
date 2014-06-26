@@ -19,6 +19,7 @@ public:
 	typedef std::vector< SceneObjectPtr >	ChildArray;
 
 	Node();
+	Node(const char* a_name);
 	virtual ~Node();
 
 	virtual void	build();
@@ -54,6 +55,22 @@ protected:
 
 	ChildArray	m_children;
 };
+
+inline Node::Node()
+{
+
+}
+
+inline Node::Node(const char* a_name)
+	: SceneObject(a_name)
+{
+
+}
+
+inline Node::~Node()
+{
+
+}
 
 inline unsigned int Node::getChildCount() const
 {

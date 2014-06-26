@@ -15,6 +15,15 @@ SceneObject::SceneObject()
 {
 }
 
+SceneObject::SceneObject(const char* a_name)
+	: Object(a_name),
+	m_parent(nullptr),
+	m_localTransform(glm::mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)),
+	m_globalTransform(glm::mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)),
+	m_visible(true)
+{
+}
+
 SceneObject::~SceneObject()
 {
 

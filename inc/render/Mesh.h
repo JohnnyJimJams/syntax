@@ -16,6 +16,7 @@ class SYNTAX_API Mesh : public SceneObject
 public:
 
 	Mesh() : m_castsShadow(true) {}
+	Mesh(const char* a_name) : SceneObject(a_name), m_castsShadow(true) {}
 	virtual ~Mesh() {}
 
 	virtual void	build();

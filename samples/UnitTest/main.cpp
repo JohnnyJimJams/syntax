@@ -103,16 +103,14 @@ public:
 		glassMaterial->setTexture(syn::Material::Diffuse, diffuseTexture);
 		
 		// create scene
-		m_scene = new syn::Node();
-		m_scene->setName("root");
+		m_scene = new syn::Node("root");
 
 		syn::Camera* camera = new syn::FlyCamera(10);
 		camera->lookAtFrom(glm::vec3(10), glm::vec3(0), glm::vec3(0, 1, 0));
 		camera->setActive();
 		m_scene->attachChild(camera);
 
-		syn::Mesh* skybox = new syn::Mesh();
-		skybox->setName("skybox");
+		syn::Mesh* skybox = new syn::Mesh("skybox");
 		skybox->setMaterial(skyboxMaterial);
 		skybox->attachGeometry(syn::Geometry::createBoxSimpleInverted());
 		skybox->setLocalScale(256);
@@ -121,8 +119,7 @@ public:
 		syn::Node* temp = new syn::Node();
 		m_scene->attachChild(temp);
 
-		syn::Mesh* sphere = new syn::Mesh();
-		sphere->setName("sphere");
+		syn::Mesh* sphere = new syn::Mesh("sphere");
 		sphere->setMaterial(glassMaterial);
 		sphere->attachGeometry(syn::Geometry::createSphere(syn::Vertex::TexCoord0 | syn::Vertex::Normal, 32, 32));
 		sphere->setLocalScale(5);
@@ -162,8 +159,6 @@ public:
 	{
 		glfwPollEvents();
 
-		syn::Gizmos::clear();
-
 		// frame rate
 		static float s_timer = 0;
 		static unsigned int s_frame = 0;
@@ -196,6 +191,8 @@ public:
 
 	void debugRender()
 	{
+		syn::Gizmos::clear();
+
 		// add an identity matrix gizmo
 		syn::Gizmos::addTransform(glm::mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1));
 

@@ -29,6 +29,7 @@ public:
 protected:
 
 	Object();
+	Object(const char* a_name);
 
 	char*	m_name;
 };
@@ -37,6 +38,12 @@ inline Object::Object()
 	: m_name(nullptr)
 {
 
+}
+
+inline Object::Object(const char* a_name)
+	: m_name(new char[strlen(a_name)+1])
+{
+	strcpy(m_name, a_name);
 }
 
 inline Object::~Object()

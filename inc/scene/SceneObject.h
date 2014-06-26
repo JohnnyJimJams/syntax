@@ -19,6 +19,7 @@ class SYNTAX_API SceneObject : public Object
 public:
 
 	SceneObject();
+	SceneObject(const char* a_name);
 	virtual ~SceneObject();
 
 	virtual void	build() {}

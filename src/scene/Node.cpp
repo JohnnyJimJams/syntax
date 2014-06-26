@@ -5,16 +5,6 @@ namespace syn
 
 SynRTTIDerived(Node,SceneObject);
 
-Node::Node()
-{
-
-}
-
-Node::~Node()
-{
-
-}
-
 void Node::build()
 {
 	for (auto& child : m_children)
