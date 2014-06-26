@@ -1,3 +1,26 @@
+20140626 - 11:37AM:
+
+I've been doing a bunch of little tweeks on the code in between writing 
+lectures. Small things really; fix a bug here, renamed something there, 
+add a new function for this, etc etc
+
+I uncommented the old FBX loading code (I have better code in another 
+project that I will bring in shortly) and gave it a test which worked 
+fine with the Stanford scan models (bunny, dragon etc).
+
+I also removed SOIL in favor for the STB image loader that SOIL is based 
+off. It loads textures so much faster, and has been updated recently (was 
+able to use it as a sub-module since it's on github). Gave it a test with 
+HDR images which worked great (I will be testing a full HDR pipeline soon). 
+For now I just threw together a test scene using a LDR cubemap (built from 
+HDR light probes) and threw together a quick glass shader. FBX loading is 
+slow, which is why I will update it soon.
+
+I tweaked the shader classes slightly, but need to find a way to make worldTransform 
+uniforms shared (i.e. automatically bound if needed). I still need to work 
+on the FrameBuffer class before I can put in the deferred and post-effects.
+
+Anyway back to lecture writing. Wooo A.I.
 
 20140622 - 4:35PM:
 
