@@ -1,7 +1,7 @@
 #pragma once
 
 #include <RefObject.h>
-#include <string.h>
+#include <string>
 
 namespace syn
 {
@@ -50,14 +50,14 @@ public:
 
 	void			release();
 
-private:
+protected:
 
 	Texture(unsigned int a_id, const char* a_name, Type a_type);
 	Texture(unsigned int a_id, const char* a_name, unsigned int a_handle, Type a_type);
 	virtual ~Texture();
 
 	unsigned int	m_id;
-	char*			m_name;
+	std::string		m_name;
 	unsigned int	m_handle;
 	Type			m_type;
 
@@ -67,9 +67,25 @@ private:
 	unsigned char*	m_data;
 };
 
+class SYNTAX_API CubeTexture : public Texture
+{
+	friend class ResourceLibrary;
+
+public:
+
+protected:
+
+	CubeTexture(unsigned int a_id, const char* a_name);
+	CubeTexture(unsigned int a_id, const char* a_name, unsigned int a_handle);
+	virtual ~CubeTexture();
+
+	std::string		m_filenames[6];
+	unsigned char*	m_extraData[5];
+};
+
 inline Texture::Texture(unsigned int a_id, const char* a_name, Type a_type)
 	:  m_id(a_id), 
-	m_name(new char[strlen(a_name)+1]), 
+	m_name(a_name), 
 	m_handle(0),
 	m_type(a_type),
 	m_width(0),
@@ -77,12 +93,12 @@ inline Texture::Texture(unsigned int a_id, const char* a_name, Type a_type)
 	m_format(0),
 	m_data(nullptr)
 {
-	strcpy(m_name,a_name);
+
 }
 
 inline Texture::Texture(unsigned int a_id, const char* a_name, unsigned int a_handle, Type a_type)
 	:  m_id(a_id), 
-	m_name(new char[strlen(a_name)+1]), 
+	m_name(a_name), 
 	m_handle(a_handle),
 	m_type(a_type),
 	m_width(0),
@@ -90,7 +106,7 @@ inline Texture::Texture(unsigned int a_id, const char* a_name, unsigned int a_ha
 	m_format(0),
 	m_data(nullptr)
 {
-	strcpy(m_name,a_name);
+
 }
 
 inline unsigned int Texture::getID() const
@@ -100,7 +116,7 @@ inline unsigned int Texture::getID() const
 
 inline const char* Texture::getName() const
 {
-	return m_name;
+	return m_name.c_str();
 }
 
 inline unsigned int Texture::getHandle() const
@@ -126,6 +142,27 @@ inline int Texture::getHeight() const
 inline int Texture::getFormat() const
 {
 	return m_format;
+}
+
+inline CubeTexture::CubeTexture(unsigned int a_id, const char* a_name)
+	: Texture(a_id,a_name,Texture::TextureCube)
+{
+	memset(m_extraData, 0, sizeof(unsigned char*) * 5);
+}
+
+inline CubeTexture::CubeTexture(unsigned int a_id, const char* a_name, unsigned int a_handle)
+	: Texture(a_id,a_name,a_handle,Texture::TextureCube)
+{
+	memset(m_extraData, 0, sizeof(unsigned char*) * 5);
+}
+
+inline CubeTexture::~CubeTexture()
+{
+	delete[] m_extraData[0];
+	delete[] m_extraData[1];
+	delete[] m_extraData[2];
+	delete[] m_extraData[3];
+	delete[] m_extraData[4];
 }
 
 } // namespace syn

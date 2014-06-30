@@ -1,5 +1,4 @@
 #include <render/Material.h>
-//#include <scene/Camera.h>
 #include <GL/glew.h>
 
 namespace syn

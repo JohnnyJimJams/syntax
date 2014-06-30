@@ -26,10 +26,10 @@ public:
 								  unsigned int a_format, unsigned int a_channels, unsigned int a_dataType,
 								  unsigned int a_type = Texture::Texture2D, const void* a_data = nullptr, bool a_ownData = false);
 	Texture*		loadTexture(const char* a_filename, unsigned int a_type = Texture::Texture2D);
-	Texture*		loadTextureCube(const char** a_filenames);
-	Texture*		reloadTexture(const char* a_filename);
+	CubeTexture*	loadTextureCube(const char* a_name, const char** a_filenames);
+	Texture*		reloadTexture(const char* a_name);
 	Texture*		reloadTexture(Texture* a_texture);
-	Texture*		reloadTextureCube(const char** a_filenames);
+	CubeTexture*	reloadTextureCube(const char* a_name, const char** a_filenames);
 	unsigned int	getTextureCount() const;
 	Texture*		getTextureByIndex(unsigned int a_index);
 	Texture*		getTexture(const char* a_name);
@@ -61,7 +61,10 @@ public:
 	void			releaseAllScenes();
 	
 	// Frame Buffers
-	FrameBuffer*	createFrameBuffer(const char* a_name, unsigned int a_width, unsigned int a_height, unsigned int a_targetCount = 1, bool a_depth = true, unsigned int* a_bufferFormat = nullptr, unsigned int* a_channels = nullptr, unsigned int* a_bufferType = nullptr);
+	FrameBuffer*	createFrameBuffer(const char* a_name, 
+									  unsigned int a_width, unsigned int a_height, 
+									  unsigned int a_targetCount = 1, bool a_depth = true, 
+									  unsigned int* a_bufferFormat = nullptr, unsigned int* a_channels = nullptr, unsigned int* a_bufferType = nullptr);
 	FrameBuffer*	getFrameBuffer(const char* a_name);
 	void			releaseFrameBuffer(FrameBuffer* a_frameBuffer);
 	void			releaseAllFrameBuffers();

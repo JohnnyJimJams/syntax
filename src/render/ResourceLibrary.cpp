@@ -225,11 +225,11 @@ Texture* ResourceLibrary::reloadTexture(Texture* a_texture)
 	return a_texture;
 }
 
-Texture* ResourceLibrary::loadTextureCube(const char** a_filenames)
+CubeTexture* ResourceLibrary::loadTextureCube(const char* a_name, const char** a_filenames)
 {
-	Texture* texture = nullptr;
+	CubeTexture* texture = nullptr;
 
-	unsigned int id = SynStringHash(a_filenames[0]);
+	unsigned int id = SynStringHash(a_name);
 
 	auto iter = m_textures.find( id );
 	if (iter == m_textures.end())
@@ -275,38 +275,48 @@ Texture* ResourceLibrary::loadTextureCube(const char** a_filenames)
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-		texture = new Texture(id, a_filenames[0], handle, Texture::TextureCube);
+		texture = new CubeTexture(id, a_name, handle);
 		m_textures[id] = texture;
 
 		texture->m_width = x[0];
 		texture->m_height = y[0];
 		texture->m_format = format;
 
-		delete[] data[0];
-		delete[] data[1];
-		delete[] data[2];
-		delete[] data[3];
-		delete[] data[4];
-		delete[] data[5];
+		texture->m_filenames[0] = a_filenames[0];
+		texture->m_filenames[1] = a_filenames[1];
+		texture->m_filenames[2] = a_filenames[2];
+		texture->m_filenames[3] = a_filenames[3];
+		texture->m_filenames[4] = a_filenames[4];
+		texture->m_filenames[5] = a_filenames[5];
+
+		texture->m_data = data[0];
+		texture->m_extraData[0] = data[1];
+		texture->m_extraData[1] = data[2];
+		texture->m_extraData[2] = data[3];
+		texture->m_extraData[3] = data[4];
+		texture->m_extraData[4] = data[5];
 	}
 	else
 	{
-		texture = iter->second;
+		logWarning("Texture with matching name [%s] already loaded! Returning previously loaded texture.\n", a_name);
+		texture = (CubeTexture*)(Texture*)iter->second;
 	}
 
 	return texture;
 }
 
-Texture* ResourceLibrary::reloadTextureCube(const char** a_filenames)
+CubeTexture* ResourceLibrary::reloadTextureCube(const char* a_name, const char** a_filenames)
 {
-	Texture* texture = nullptr;
+	CubeTexture* texture = nullptr;
 
-	unsigned int id = SynStringHash(a_filenames[0]);
+	unsigned int id = SynStringHash(a_name);
 
 	auto iter = m_textures.find( id );
 	if (iter != m_textures.end())
 	{
-		texture = iter->second;
+		assertMessage(iter->second->getType() == Texture::TextureCube, "Can not reaload TextureCube as texture is not a cube map!");
+
+		texture = (CubeTexture*)(Texture*)(iter->second);
 
 		int x[6], y[6], comp[6];
 		unsigned char* data[6];
@@ -351,12 +361,25 @@ Texture* ResourceLibrary::reloadTextureCube(const char** a_filenames)
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-		delete[] data[0];
-		delete[] data[1];
-		delete[] data[2];
-		delete[] data[3];
-		delete[] data[4];
-		delete[] data[5];
+		texture->m_filenames[0] = a_filenames[0];
+		texture->m_filenames[1] = a_filenames[1];
+		texture->m_filenames[2] = a_filenames[2];
+		texture->m_filenames[3] = a_filenames[3];
+		texture->m_filenames[4] = a_filenames[4];
+		texture->m_filenames[5] = a_filenames[5];
+
+		delete[] texture->m_data;
+		texture->m_data = data[0];
+		delete[] texture->m_extraData[0];
+		texture->m_extraData[0] = data[1];
+		delete[] texture->m_extraData[1];
+		texture->m_extraData[1] = data[2];
+		delete[] texture->m_extraData[2];
+		texture->m_extraData[2] = data[3];
+		delete[] texture->m_extraData[3];
+		texture->m_extraData[3] = data[4];
+		delete[] texture->m_extraData[4];
+		texture->m_extraData[4] = data[5];
 	}
 
 	return texture;

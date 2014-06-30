@@ -18,18 +18,22 @@ struct Camera
 
 uniform Camera camera;
 
-const float refractFactor = 0.975;
-const float reflectFactor = 0.1;
+// refraction
+const float objectRI = 1.333;
+const float refractiveIndex = 1.0 / objectRI; 
+const float fresnelFactor = ((1.0 - objectRI) * (1.0 - objectRI)) / ((1.0 + objectRI) * (1.0 + objectRI));
 
 void main()
 {
 	vec3 V = normalize(worldPosition.xyz - camera.position.xyz);
 	vec3 N = normalize(worldNormal.xyz);
-
+	
 	vec3 refl = reflect( V, N );
-	vec3 refr = refract( V, N, refractFactor );		
-						   
-	FragColour.rgb = mix( texture( environmentMap, refr ).rgb, texture( environmentMap, refl ).rgb, reflectFactor );
+	vec3 refr = refract( V, N, refractiveIndex );	
+
+	float fresnel = fresnelFactor + (1.0 - fresnelFactor) * pow(1.0 - dot(-V, N), 5.0);
+							   
+	FragColour.rgb = mix( texture( environmentMap, refr ).rgb, texture( environmentMap, refl ).rgb, fresnel );
 	
 	FragColour.a = 1;
 }

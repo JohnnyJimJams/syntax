@@ -83,7 +83,7 @@ public:
 			"../../bin/textures/skybox/ennis_cube_posz.tga",
 			"../../bin/textures/skybox/ennis_cube_negz.tga",
 		};
-		syn::Texture* skyboxTexture = resourceLibrary->loadTextureCube(skyboxTextures);
+		syn::Texture* skyboxTexture = resourceLibrary->loadTextureCube("skybox",skyboxTextures);
 		syn::Material* skyboxMaterial = resourceLibrary->createMaterial("skybox");
 		skyboxMaterial->setShader( skyboxShader );
 		skyboxMaterial->setTexture(syn::Material::Diffuse, skyboxTexture);
@@ -136,7 +136,7 @@ public:
 		syn::RotationController* rot = new syn::RotationController(glm::quarter_pi<float>(), glm::vec3(0, 1, 0));
 		temp->attachController(rot);
 
-		syn::SceneNode* fbx = resourceLibrary->loadFBXScene("../../bin/models/stanford/bunny.fbx");
+		syn::SceneNode* fbx = resourceLibrary->loadFBXScene("../../bin/models/stanford/lucy.fbx");
 		m_scene->attachChild(fbx);
 
 		fbx->attachController(rot);
@@ -147,7 +147,7 @@ public:
 
 		glClearColor(0.25f,0.25f,0.25f,1);
 		glEnable(GL_DEPTH_TEST);
-	//	glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 
 		return true;
 	}

@@ -31,10 +31,6 @@ public:
 		Shadow,
 
 		TextureChannel_Count,
-
-		LightBuffer	=	TextureChannel_Count,
-		AOBuffer,
-		SinTanLookup,
 	};
 
 	static const char*	getTextureChannelName(TextureChannel a_channel);
