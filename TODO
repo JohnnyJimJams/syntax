@@ -8,14 +8,28 @@ TODO List for Syntax:
 		Perhaps try and come up with a system that "builds" shaders from 
 		strings depending on material features.
 		
+	- Compute
+		Need support for GLSL Compute shaders.
+		Can also add in OpenCL, but I feel that shouldn't be a part of the core.
+		
 	- Add in a plugin-based system for mesh loading to allow different formats.
 		Desired formats include FBX, OBJ and DAE (Collada).
 		This needs to be handled "under the hood" so that the ResourceLibrary doesn't care.
 		
 	- Fix FBX transform error.
+		FIRST: Realised the code committed is my old FBX loading code. I need to
+		replace this with the newer / faster code.
 		If an artist uses FreezeTransforms then the vertices when loaded 
 		contain the transform offsets and the mesh's transform is identity, 
 		which is horrible for a parented hierarchy.
+		
+	- Re-test Animation
+		Skeletal animation worked last time, but need to re-test.
+		Also need to add proper support for morph animation and vertex blending.
+		
+	- Fix FrameBuffer
+		Currently one of the least flexible classes in the code. Needs to be easy to 
+		use to create all types of framebuffers, including depth, depth textures and stencils.
 
 	- Flexible Post-Effects pipeline.
 		Need to resurrect my Deferred, HDR, DoF, SSAO and SMAA wrappers 
@@ -26,5 +40,3 @@ TODO List for Syntax:
 		Use sRGB as much as possible.
 		Incorporate modern lens effects and chromotic aberations.
 		
-	- Look into replacing SmartPointer with std::shared_ptr if possible.
-		Looked into this, and "object handles reference counting" works better for my architecture.
