@@ -20,7 +20,6 @@ uniform Camera camera;
 
 // refraction
 const float objectRI = 1.333;
-const float refractiveIndex = 1.0 / objectRI; 
 const float fresnelFactor = ((1.0 - objectRI) * (1.0 - objectRI)) / ((1.0 + objectRI) * (1.0 + objectRI));
 
 void main()
@@ -29,7 +28,7 @@ void main()
 	vec3 N = normalize(worldNormal.xyz);
 	
 	vec3 refl = reflect( V, N );
-	vec3 refr = refract( V, N, refractiveIndex );	
+	vec3 refr = refract( V, N, 1.0 / objectRI );	
 
 	float fresnel = fresnelFactor + (1.0 - fresnelFactor) * pow(1.0 - dot(-V, N), 5.0);
 							   
