@@ -21,48 +21,9 @@ public:
 
 	virtual bool onCreate(int a_argc, char* a_argv[])
 	{
-		// initialise glfw systems
-		if (glfwInit() != GL_TRUE)
+		// open window
+		if (initGLWindow("Syntax Unit Test", 1280, 720) == false)
 			return false;
-
-		glfwDefaultWindowHints();
-
-		// turn on 8x AA
-		glfwWindowHint(GLFW_SAMPLES, 16);
-
-		// create a windowed mode window and its OpenGL context
-		m_window = glfwCreateWindow(1280, 720, "Syntax Unit Test", nullptr, nullptr);
-		if (m_window == nullptr)
-		{
-			glfwTerminate();
-			return false;
-		}
-
-		auto major = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MAJOR);
-		auto minor = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MINOR);
-		auto revision = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_REVISION);
-		syn::log("GL %i.%i.%i\n", major, minor, revision);
-
-		// make the window's context current
-		glfwMakeContextCurrent(m_window);
-
-		// initialise glew systems to wrangle GL extensions
-		glewExperimental = GL_TRUE;
-		if (glewInit() != GLEW_OK)
-		{
-			glfwTerminate();
-			return false;
-		}
-
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(syn::logGLDebugCallback, nullptr);
-
-		// simply resize the GL viewport when the window size changes
-		glfwSetWindowSizeCallback(m_window, [](GLFWwindow*, int w, int h)
-		{ 
-			glViewport(0, 0, w, h); 
-			syn::Camera::getActiveCamera()->setPerspectiveProjection(glm::quarter_pi<float>(), w / (float)h, 0.1f, 1000);
-		});
 
 		// start systems
 		syn::Gizmos::create();
@@ -214,6 +175,54 @@ public:
 		}
 
 		syn::Gizmos::draw(syn::Camera::getActiveCamera()->getProjectionView());
+	}
+
+	bool initGLWindow(const char* a_title, int a_width, int a_height)
+	{
+		// initialise glfw systems
+		if (glfwInit() != GL_TRUE)
+			return false;
+
+		glfwDefaultWindowHints();
+
+		// turn on AA
+		glfwWindowHint(GLFW_SAMPLES, 4);
+
+		// create a windowed mode window and its OpenGL context
+		m_window = glfwCreateWindow(a_width, a_height, a_title, nullptr, nullptr);
+		if (m_window == nullptr)
+		{
+			glfwTerminate();
+			return false;
+		}
+
+		auto major = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MAJOR);
+		auto minor = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_VERSION_MINOR);
+		auto revision = glfwGetWindowAttrib(m_window, GLFW_CONTEXT_REVISION);
+		syn::log("GL %i.%i.%i\n", major, minor, revision);
+
+		// make the window's context current
+		glfwMakeContextCurrent(m_window);
+
+		// initialise glew systems to wrangle GL extensions
+		glewExperimental = GL_TRUE;
+		if (glewInit() != GLEW_OK)
+		{
+			glfwTerminate();
+			return false;
+		}
+
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(syn::logGLDebugCallback, nullptr);
+
+		// simply resize the GL viewport when the window size changes
+		glfwSetWindowSizeCallback(m_window, [](GLFWwindow*, int w, int h)
+		{
+			glViewport(0, 0, w, h);
+			syn::Camera::getActiveCamera()->setPerspectiveProjection(glm::quarter_pi<float>(), w / (float)h, 0.1f, 1000);
+		});
+
+		return true;
 	}
 };
 

@@ -528,8 +528,9 @@ void ResourceLibrary::reloadShaders()
 		shader.second->reload();
 }
 
-FrameBuffer* ResourceLibrary::createFrameBuffer(const char* a_name, unsigned int a_width, unsigned int a_height, unsigned int a_targetCount /* = 1 */,
-	bool a_depth /* = true */, unsigned int* a_bufferFormat /* = nullptr */, unsigned int* a_channels /* = nullptr */, unsigned int* a_bufferType /* = nullptr */)
+FrameBuffer* ResourceLibrary::createFrameBuffer(const char* a_name, unsigned int a_width, unsigned int a_height, 
+	unsigned int a_targetCount, FrameBufferDesc* a_targetDesc,
+	bool a_depth /* = true */, bool a_stencil /* = false */)
 {
 	unsigned int id = SynStringHash(a_name);
 	auto iter = m_frameBuffers.find( id );
@@ -538,7 +539,7 @@ FrameBuffer* ResourceLibrary::createFrameBuffer(const char* a_name, unsigned int
 		return iter->second;
 	}
 
-	FrameBuffer* frameBuffer = new FrameBuffer(a_name,id,a_width,a_height,a_targetCount,a_depth,a_bufferFormat,a_channels,a_bufferType);
+	FrameBuffer* frameBuffer = new FrameBuffer(a_name,id,a_width,a_height,a_targetCount,a_targetDesc,a_depth,a_stencil);
 	m_frameBuffers[id] = frameBuffer;
 	return frameBuffer;
 }

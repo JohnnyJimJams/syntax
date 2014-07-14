@@ -42,10 +42,8 @@ void Light::setupShadow(unsigned int a_width, unsigned int a_height, float a_far
 	m_shadowDimensions.y = a_textureHeight;
 
 	m_shadowFar = a_far;
-	unsigned int format = GL_R32F;
-	unsigned int channel = GL_RED;
-	unsigned int type = GL_FLOAT;
-	m_shadowBuffer = ResourceLibrary::getSingleton()->createFrameBuffer("shadowMap",a_textureWidth, a_textureHeight,1,true,&format,&channel,&type);
+	FrameBufferDesc desc = { GL_R32F, GL_RED, GL_FLOAT };
+	m_shadowBuffer = ResourceLibrary::getSingleton()->createFrameBuffer("shadowMap", a_textureWidth, a_textureHeight, 1, &desc);
 	m_shadowBuffer->getTexture(0)->bind(0);
 	float colour[] = {1,1,1,1};
 	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, colour);
