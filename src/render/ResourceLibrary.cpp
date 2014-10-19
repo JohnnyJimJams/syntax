@@ -1,7 +1,7 @@
 #include <render/ResourceLibrary.h>
 #include <render/Mesh.h>
 #include <utilities/HashFunctions.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 #include <glm/ext.hpp>
 #include <fbxsdk.h>
 #include <utilities/Log.h>
@@ -135,8 +135,8 @@ Texture* ResourceLibrary::loadTexture(const char* a_filename, unsigned int a_typ
 
 		switch (texture->m_format)
 		{
-		case STBI_grey: texture->m_format = GL_LUMINANCE; break;
-		case STBI_grey_alpha: texture->m_format = GL_LUMINANCE_ALPHA; break;
+		case STBI_grey: texture->m_format = GL_RED; break;
+		case STBI_grey_alpha: texture->m_format = GL_RG; break;
 		case STBI_rgb: texture->m_format = GL_RGB; break;
 		case STBI_rgb_alpha: texture->m_format = GL_RGBA; break;
 		};
@@ -181,8 +181,8 @@ Texture* ResourceLibrary::reloadTexture(const char* a_filename)
 
 			switch (texture->m_format)
 			{
-			case STBI_grey: texture->m_format = GL_LUMINANCE; break;
-			case STBI_grey_alpha: texture->m_format = GL_LUMINANCE_ALPHA; break;
+			case STBI_grey: texture->m_format = GL_RED; break;
+			case STBI_grey_alpha: texture->m_format = GL_RG; break;
 			case STBI_rgb: texture->m_format = GL_RGB; break;
 			case STBI_rgb_alpha: texture->m_format = GL_RGBA; break;
 			};
@@ -210,8 +210,8 @@ Texture* ResourceLibrary::reloadTexture(Texture* a_texture)
 
 		switch (a_texture->m_format)
 		{
-		case STBI_grey: a_texture->m_format = GL_LUMINANCE; break;
-		case STBI_grey_alpha: a_texture->m_format = GL_LUMINANCE_ALPHA; break;
+		case STBI_grey: a_texture->m_format = GL_RED; break;
+		case STBI_grey_alpha: a_texture->m_format = GL_RG; break;
 		case STBI_rgb: a_texture->m_format = GL_RGB; break;
 		case STBI_rgb_alpha: a_texture->m_format = GL_RGBA; break;
 		};
@@ -253,8 +253,8 @@ CubeTexture* ResourceLibrary::loadTextureCube(const char* a_name, const char** a
 		int format = 0;
 		switch (comp[0])
 		{
-		case STBI_grey: format = GL_LUMINANCE; break;
-		case STBI_grey_alpha: format = GL_LUMINANCE_ALPHA; break;
+		case STBI_grey: format = GL_RED; break;
+		case STBI_grey_alpha: format = GL_RG; break;
 		case STBI_rgb: format = GL_RGB; break;
 		case STBI_rgb_alpha: format = GL_RGBA; break;
 		};
@@ -337,8 +337,8 @@ CubeTexture* ResourceLibrary::reloadTextureCube(const char* a_name, const char**
 		int format = 0;
 		switch (comp[0])
 		{
-		case STBI_grey: format = GL_LUMINANCE; break;
-		case STBI_grey_alpha: format = GL_LUMINANCE_ALPHA; break;
+		case STBI_grey: format = GL_RED; break;
+		case STBI_grey_alpha: format = GL_RG; break;
 		case STBI_rgb: format = GL_RGB; break;
 		case STBI_rgb_alpha: format = GL_RGBA; break;
 		};

@@ -4,7 +4,7 @@
 #include <render/Mesh.h>
 #include <scene/Camera.h>
 #include <string>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 #include <glm/ext.hpp>
 
 namespace syn

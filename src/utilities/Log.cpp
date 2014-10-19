@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utilities/Log.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 #include <windows.h>
 #include <string>
 
@@ -156,7 +156,7 @@ void __stdcall logGLDebugCallback(unsigned int a_source,
 	unsigned int a_severity,
 	int a_length,
 	const char* a_message,
-	void* a_userParam)
+	const void* a_userParam)
 {
 	char source[16], type[20];
 	if (a_source == GL_DEBUG_SOURCE_API)
@@ -175,13 +175,19 @@ void __stdcall logGLDebugCallback(unsigned int a_source,
 	if (a_type == GL_DEBUG_TYPE_ERROR)
 		strcpy(type, "Error");
 	else if (a_type == GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR)
-		strcpy(type, "Deprecated behavior");
+		strcpy(type, "Deprecated Behavior");
 	else if (a_type == GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR)
-		strcpy(type, "Undefined behavior");
+		strcpy(type, "Undefined Behavior");
 	else if (a_type == GL_DEBUG_TYPE_PORTABILITY)
 		strcpy(type, "Portability");
 	else if (a_type == GL_DEBUG_TYPE_PERFORMANCE)
 		strcpy(type, "Performance");
+	else if (a_type == GL_DEBUG_TYPE_MARKER)
+		strcpy(type, "Marker");
+	else if (a_type == GL_DEBUG_TYPE_PUSH_GROUP)
+		strcpy(type, "Push Group");
+	else if (a_type == GL_DEBUG_TYPE_POP_GROUP)
+		strcpy(type, "Pop Group");
 	else if (a_type == GL_DEBUG_TYPE_OTHER)
 		strcpy(type, "Other");
 
@@ -191,6 +197,9 @@ void __stdcall logGLDebugCallback(unsigned int a_source,
 		syn::logWarning("GL Warning: %d\n\tType: %s\n\tSource: %s\n\tMessage: %s\n", a_id, type, source, a_message);
 	else if (a_severity == GL_DEBUG_SEVERITY_LOW)
 		syn::log("GL: %d\n\tType: %s\n\tSource: %s\n\tMessage: %s\n", a_id, type, source, a_message);
+	else if (a_severity == GL_DEBUG_SEVERITY_NOTIFICATION)
+		syn::log("GL Message: %d\n\tType: %s\n\tSource: %s\n\tMessage: %s\n", a_id, type, source, a_message);
+
 }
 
 

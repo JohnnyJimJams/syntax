@@ -34,6 +34,6 @@ namespace syn
 		unsigned int a_severity,
 		int a_length,
 		const char* a_message,
-		void* a_userParam);
+		const void* a_userParam);
 
 } // namespace syn

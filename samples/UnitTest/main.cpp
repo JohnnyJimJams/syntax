@@ -1,5 +1,5 @@
 #include <Application.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
 #include <utilities/Log.h>
@@ -204,9 +204,9 @@ public:
 		// make the window's context current
 		glfwMakeContextCurrent(m_window);
 
-		// initialise glew systems to wrangle GL extensions
-		glewExperimental = GL_TRUE;
-		if (glewInit() != GLEW_OK)
+
+		// update GL function pointers
+		if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
 		{
 			glfwTerminate();
 			return false;

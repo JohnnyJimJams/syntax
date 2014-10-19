@@ -1,6 +1,6 @@
 #include <render/Texture.h>
 #include <render/ResourceLibrary.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 
 namespace syn 
 {

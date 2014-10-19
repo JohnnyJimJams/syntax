@@ -7,3 +7,6 @@
 [submodule "dep/stb"]
 	path = dep/stb
 	url = https://github.com/nothings/stb.git
+[submodule "dep/anttweakbar"]
+	path = dep/anttweakbar
+	url = http://git.code.sf.net/p/anttweakbar/code

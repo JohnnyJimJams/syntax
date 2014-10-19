@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\inc\gl_core_4_4.h" />
     <ClInclude Include="..\..\inc\Object.h" />
     <ClInclude Include="..\..\inc\RefObject.h" />
     <ClInclude Include="..\..\inc\render\FrameBuffer.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="..\..\inc\utilities\Property.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\gl_core_4_4.c" />
     <ClCompile Include="..\..\src\Object.cpp" />
     <ClCompile Include="..\..\src\RefObject.cpp" />
     <ClCompile Include="..\..\src\render\FrameBuffer.cpp" />
@@ -92,14 +94,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(FBX_SDK_DIR)2015.1\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(FBX_SDK_DIR)2015.1\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\lib\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(FBX_SDK_DIR)2015.1/lib/vs2013/x86/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(FBX_SDK_DIR)2015.1/lib/vs2013/x86/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glew/include;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(FBX_SDK_DIR)2015.1\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)../inc;$(SolutionDir)../dep/glm;$(SolutionDir)../dep/glfw/include;$(SolutionDir)../dep/stb;$(FBX_SDK_DIR)2015.1\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\lib\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(SolutionDir)../dep/glew/lib/Release/Win32;$(FBX_SDK_DIR)2015.1/lib/vs2013/x86/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <LibraryPath>$(SolutionDir)../dep/glfw/src/$(Configuration);$(FBX_SDK_DIR)2015.1/lib/vs2013/x86/$(Configuration);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,7 +116,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;libfbxsdk-md.lib;wininet.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;libfbxsdk-md.lib;wininet.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -135,7 +137,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;opengl32.lib;glfw3.lib;libfbxsdk-md.lib;wininet.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;libfbxsdk-md.lib;wininet.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>

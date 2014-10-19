@@ -81,6 +81,9 @@
     <ClInclude Include="..\..\inc\scene\SceneNode.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\inc\gl_core_4_4.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Object.cpp" />
@@ -140,6 +143,9 @@
     <ClCompile Include="..\..\src\RefObject.cpp" />
     <ClCompile Include="..\..\src\scene\SceneNode.cpp">
       <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gl_core_4_4.c">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

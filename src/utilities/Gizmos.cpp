@@ -1,5 +1,5 @@
 #include <utilities/Gizmos.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 #include <glm/ext.hpp>
 #include <utilities/Log.h>
 

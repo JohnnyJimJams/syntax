@@ -2,7 +2,7 @@
 #include <render/ResourceLibrary.h>
 #include <utilities/Log.h>
 #include <string.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 
 namespace syn
 {

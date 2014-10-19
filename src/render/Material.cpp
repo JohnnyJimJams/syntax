@@ -1,5 +1,5 @@
 #include <render/Material.h>
-#include <GL/glew.h>
+#include <gl_core_4_4.h>
 
 namespace syn
 {
