@@ -11,6 +11,6 @@ Uses the Autodesk FBX SDK version 2015.1
 Current dependancies:
   - GLM (sub-module)
   - GLFW (sub-module)
-  - GLEW
   - STB (sub-module)
   - FBX SDK (not contained within /dep/ folder)
+  - ~~GLEW~~ No longer a dependency.  Now using OpenGL Loader Generator(https://bitbucket.org/alfonse/glloadgen/wiki/Home)
